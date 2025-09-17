@@ -2,9 +2,13 @@
     "name": "@ecommerce/typescript-config",
     "version": "1.0.0",
     "main": "index.js",
+    "scripts": {
+      "clean": "rimraf dist"
+    },
     "files": [
       "base.json",
       "nextjs.json",
-      "node.json"
+      "node.json",
+      "react-library.json"
     ]
   }
