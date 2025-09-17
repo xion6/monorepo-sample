@@ -1,2 +1,2 @@
 // Domain entities will be exported from here
-export {};
+export {ProductEntity, ProductSchema, type Product} from './Product';
