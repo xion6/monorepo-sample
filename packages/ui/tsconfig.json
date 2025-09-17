@@ -1,9 +1,28 @@
 {
-  "extends": "@ecommerce/typescript-config/base.json",
+  "extends": "@ecommerce/typescript-config/react-library.json",
   "compilerOptions": {
+    "composite": true,
     "outDir": "./dist",
-    "jsx": "react-jsx"
+    "rootDir": "./src",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "types": [
+      "react",
+      "react-dom"
+    ]
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "**/*.test.tsx",
+    "**/*.spec.tsx",
+    "**/*.stories.tsx"
+  ]
 }

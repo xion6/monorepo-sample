@@ -3,4 +3,12 @@ node_modules
 .claude
 .serena
 .vscode
-dist
+
+# Build outputs
+*.js
+*.d.ts
+*.js.map
+*.d.ts.map
+dist/
+build/
+tsconfig.tsbuildinfo

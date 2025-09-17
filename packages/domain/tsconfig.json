@@ -1,8 +1,21 @@
 {
-  "extends": "@ecommerce/typescript-config/base.json",
+  "extends": "@ecommerce/typescript-config/node.json",
   "compilerOptions": {
-    "outDir": "./dist"
+    "composite": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
 }
