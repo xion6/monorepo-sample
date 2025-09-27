@@ -1,1 +1,1 @@
-export { GetRankedProdoctsService } from "./GetRankedProdoctsService";
+export { GetRankedProdoctsService } from './GetRankedProdoctsService'

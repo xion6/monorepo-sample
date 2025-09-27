@@ -6,4 +6,4 @@ export {
   ProductArraySchema,
   type Product,
   type Products,
-} from "./Product";
+} from './Product'

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 export const ProductSchema = z.object({
   id: z.string(),
@@ -11,32 +11,32 @@ export const ProductSchema = z.object({
   stock: z.number().int().min(0),
   createdAt: z.date(),
   updatedAt: z.date(),
-});
+})
 
-export const ProductArraySchema = z.array(ProductSchema);
+export const ProductArraySchema = z.array(ProductSchema)
 
-export type Product = z.infer<typeof ProductSchema>;
-export type Products = z.infer<typeof ProductArraySchema>;
+export type Product = z.infer<typeof ProductSchema>
+export type Products = z.infer<typeof ProductArraySchema>
 
 export class ProductEntity {
   constructor(private product: Product) {}
 
   get id() {
-    return this.product.id;
+    return this.product.id
   }
   get name() {
-    return this.product.name;
+    return this.product.name
   }
   get price() {
-    return this.product.price;
+    return this.product.price
   }
 
   isInStock(): boolean {
-    return this.product.stock > 0;
+    return this.product.stock > 0
   }
 
   canPurchase(quantity: number): boolean {
-    return this.product.stock >= quantity;
+    return this.product.stock >= quantity
   }
 
   updateStock(newStock: number): ProductEntity {
@@ -44,7 +44,7 @@ export class ProductEntity {
       ...this.product,
       stock: newStock,
       updatedAt: new Date(),
-    });
+    })
   }
 }
 
@@ -52,37 +52,37 @@ export class ProductsEntity {
   constructor(private products: Products) {}
 
   get all() {
-    return this.products;
+    return this.products
   }
 
   findById(id: string): ProductEntity | undefined {
-    const product = this.products.find((p: Product) => p.id === id);
-    return product ? new ProductEntity(product) : undefined;
+    const product = this.products.find((p: Product) => p.id === id)
+    return product ? new ProductEntity(product) : undefined
   }
 
   filterByCategory(categoryId: string): ProductsEntity {
     const filtered = this.products.filter(
-      (p: Product) => p.categoryId === categoryId,
-    );
-    return new ProductsEntity(filtered);
+      (p: Product) => p.categoryId === categoryId
+    )
+    return new ProductsEntity(filtered)
   }
 
   sortByPrice(ascending: boolean = true): ProductsEntity {
     const sorted = [...this.products].sort((a, b) =>
-      ascending ? a.price - b.price : b.price - a.price,
-    );
-    return new ProductsEntity(sorted);
+      ascending ? a.price - b.price : b.price - a.price
+    )
+    return new ProductsEntity(sorted)
   }
 
   sortByRank(): ProductsEntity {
     // Assuming products have a 'rank' property for demonstration purposes
     const sorted = [...this.products].sort(
-      (a, b) => (a as Product).rank - (b as Product).rank,
-    );
-    return new ProductsEntity(sorted);
+      (a, b) => (a as Product).rank - (b as Product).rank
+    )
+    return new ProductsEntity(sorted)
   }
 
   toArray(): Products {
-    return this.products;
+    return this.products
   }
 }

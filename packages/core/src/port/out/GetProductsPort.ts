@@ -1,5 +1,5 @@
-import { Products } from "../../domain/entities/Product";
+import { Products } from '../../domain/entities/Product'
 
 export interface GetProductsPort {
-  getProducts(): Promise<Products>;
+  getProducts(): Promise<Products>
 }
