@@ -9,10 +9,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "clean": "rimraf dist",
-    "lint": "biome check .",
-    "lint:fix": "biome check --fix .",
-    "format": "biome format --write ."
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "reflect-metadata": "^0.2.2",
