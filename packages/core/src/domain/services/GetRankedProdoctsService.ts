@@ -1,5 +1,6 @@
 import 'reflect-metadata'
 import { injectable, inject } from 'tsyringe'
+
 import { GetRankedProdoctsUseCase } from '../../port/in/GetRankedProductsUseCase'
 import { GetProductsPort } from '../../port/out/GetProductsPort'
 import { ProductsEntity } from '../entities/Product'
