@@ -1,1 +1,1 @@
-export { GetProductsPort } from './GetProductsPort';
+export { GetProductsPort } from "./GetProductsPort";
