@@ -24,8 +24,10 @@ export interface ProductFilters {
 
 export interface ProductQueryParams extends ProductFilters {
   page?: number;
+  limit?: number;
   size?: number;
   sortBy?: 'name' | 'price' | 'createdAt' | 'updatedAt';
   sortOrder?: 'asc' | 'desc';
   search?: string;
+  category?: string;
 }

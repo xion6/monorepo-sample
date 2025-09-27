@@ -1,85 +1,96 @@
-import { BaseService } from './base.service';
-import { API_ROUTES } from '../api-routes';
-import { ProductEntity, ProductSchema, Product } from '@ecommerce/core';
-import { 
-  CreateProductRequest, 
-  UpdateProductRequest, 
+import {
+  DIContainer,
+  createContainer,
+  ProductsEntity,
+  ProductEntity
+} from '@ecommerce/core';
+import { AxiosHttpClient } from '../adapters/axios-http-client';
+import {
+  CreateProductRequest,
+  UpdateProductRequest,
   ProductQueryParams,
   ApiResponse,
-  PaginatedResponse 
+  PaginatedResponse
 } from '../types';
 
-export class ProductService extends BaseService {
+export class ProductService {
+  private container: DIContainer;
+
+  constructor(baseURL: string) {
+    const httpClient = new AxiosHttpClient(baseURL);
+    this.container = createContainer(httpClient);
+  }
+
   async getProducts(params?: ProductQueryParams): Promise<PaginatedResponse<ProductEntity>> {
-    const url = this.buildUrl(API_ROUTES.products.list, params);
-    const response = await this.get<PaginatedResponse<Product>>(url);
-    
-    // Validate and transform response data using domain schema
-    const validatedItems = response.items.map((item: Product) => {
-      const validated = ProductSchema.parse(item);
-      return new ProductEntity(validated);
-    });
-    
-    return { ...response, items: validatedItems };
+    const productsEntity = await this.container.getAllProductsUseCase.execute();
+
+    // Transform domain entity to API response format
+    const items = productsEntity.all.map(product => new ProductEntity(product));
+
+    return {
+      items,
+      total: items.length,
+      page: params?.page || 1,
+      limit: params?.limit || 10,
+      hasMore: false // Simplified for demo
+    };
   }
 
   async getProduct(id: string): Promise<ApiResponse<ProductEntity>> {
-    const response = await this.get<ApiResponse<Product>>(API_ROUTES.products.detail(id));
-    
-    // Validate and transform response data
-    const validated = ProductSchema.parse(response.data);
-    return { ...response, data: new ProductEntity(validated) };
-  }
+    const productsEntity = await this.container.getProductByIdUseCase.execute(id);
+    const product = productsEntity.findById(id);
 
-  async createProduct(data: CreateProductRequest): Promise<ApiResponse<ProductEntity>> {
-    const response = await this.post<ApiResponse<Product>, CreateProductRequest>(API_ROUTES.products.create, data);
-    
-    // Validate and transform response data
-    const validated = ProductSchema.parse(response.data);
-    return { ...response, data: new ProductEntity(validated) };
-  }
+    if (!product) {
+      throw new Error('Product not found');
+    }
 
-  async updateProduct(data: UpdateProductRequest): Promise<ApiResponse<ProductEntity>> {
-    const { id, ...updateData } = data;
-    const response = await this.put<ApiResponse<Product>, Omit<UpdateProductRequest, 'id'>>(
-      API_ROUTES.products.update(id), 
-      updateData
-    );
-    
-    // Validate and transform response data
-    const validated = ProductSchema.parse(response.data);
-    return { ...response, data: new ProductEntity(validated) };
-  }
-
-  async deleteProduct(id: string): Promise<ApiResponse<void>> {
-    return this.delete<ApiResponse<void>>(API_ROUTES.products.delete(id));
+    return {
+      data: product,
+      success: true,
+      message: 'Product retrieved successfully'
+    };
   }
 
   async searchProducts(query: string, params?: Omit<ProductQueryParams, 'search'>): Promise<PaginatedResponse<ProductEntity>> {
-    const searchParams = { ...params, search: query };
-    const url = this.buildUrl(API_ROUTES.products.search, searchParams);
-    const response = await this.get<PaginatedResponse<Product>>(url);
-    
-    // Validate and transform response data
-    const validatedItems = response.items.map((item: Product) => {
-      const validated = ProductSchema.parse(item);
-      return new ProductEntity(validated);
-    });
-    
-    return { ...response, items: validatedItems };
+    const productsEntity = await this.container.searchProductsUseCase.execute(query);
+    const items = productsEntity.all.map(product => new ProductEntity(product));
+
+    return {
+      items,
+      total: items.length,
+      page: params?.page || 1,
+      limit: params?.limit || 10,
+      hasMore: false
+    };
   }
 
   async getProductsByCategory(category: string, params?: Omit<ProductQueryParams, 'category'>): Promise<PaginatedResponse<ProductEntity>> {
-    // Use the dedicated byCategory route instead of query params
-    const url = this.buildUrl(API_ROUTES.products.byCategory(category), params);
-    const response = await this.get<PaginatedResponse<Product>>(url);
-    
-    // Validate and transform response data
-    const validatedItems = response.items.map((item: Product) => {
-      const validated = ProductSchema.parse(item);
-      return new ProductEntity(validated);
-    });
-    
-    return { ...response, items: validatedItems };
+    const productsEntity = await this.container.getProductsByCategoryUseCase.execute(category);
+    const items = productsEntity.all.map(product => new ProductEntity(product));
+
+    return {
+      items,
+      total: items.length,
+      page: params?.page || 1,
+      limit: params?.limit || 10,
+      hasMore: false
+    };
+  }
+
+  async getProductsByRank(rank: number): Promise<ProductsEntity> {
+    return this.container.getProductsByRankUseCase.execute(rank);
+  }
+
+  // Legacy methods for backward compatibility (will be deprecated)
+  async createProduct(data: CreateProductRequest): Promise<ApiResponse<ProductEntity>> {
+    throw new Error('Create product not implemented in hexagonal architecture yet');
+  }
+
+  async updateProduct(data: UpdateProductRequest): Promise<ApiResponse<ProductEntity>> {
+    throw new Error('Update product not implemented in hexagonal architecture yet');
+  }
+
+  async deleteProduct(id: string): Promise<ApiResponse<void>> {
+    throw new Error('Delete product not implemented in hexagonal architecture yet');
   }
 }

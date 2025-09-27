@@ -22,8 +22,8 @@ export const productKeys = {
 
 // Custom hooks for products
 export function useProducts(params?: ProductQueryParams) {
-  const client = useApiClient();
-  const productService = new ProductService(client);
+  const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+  const productService = new ProductService(baseURL);
 
   return useQuery({
     queryKey: productKeys.list(params),
@@ -34,8 +34,8 @@ export function useProducts(params?: ProductQueryParams) {
 }
 
 export function useProduct(id: string, enabled = true) {
-  const client = useApiClient();
-  const productService = new ProductService(client);
+  const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+  const productService = new ProductService(baseURL);
 
   return useQuery({
     queryKey: productKeys.detail(id),
@@ -47,8 +47,8 @@ export function useProduct(id: string, enabled = true) {
 }
 
 export function useProductSearch(query: string, enabled = true) {
-  const client = useApiClient();
-  const productService = new ProductService(client);
+  const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+  const productService = new ProductService(baseURL);
 
   return useQuery({
     queryKey: productKeys.search(query),
@@ -60,8 +60,8 @@ export function useProductSearch(query: string, enabled = true) {
 }
 
 export function useCreateProduct() {
-  const client = useApiClient();
-  const productService = new ProductService(client);
+  const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+  const productService = new ProductService(baseURL);
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -69,7 +69,7 @@ export function useCreateProduct() {
     onSuccess: (response: ApiResponse<ProductEntity>) => {
       // Invalidate and refetch product lists
       queryClient.invalidateQueries({ queryKey: productKeys.lists() });
-      
+
       // Add the new product to the cache
       queryClient.setQueryData(
         productKeys.detail(response.data.id),
@@ -80,21 +80,21 @@ export function useCreateProduct() {
 }
 
 export function useUpdateProduct() {
-  const client = useApiClient();
-  const productService = new ProductService(client);
+  const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+  const productService = new ProductService(baseURL);
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (data: UpdateProductRequest) => productService.updateProduct(data),
     onSuccess: (response: ApiResponse<ProductEntity>, variables) => {
       const productId = variables.id;
-      
+
       // Update the specific product in cache
       queryClient.setQueryData(
         productKeys.detail(productId),
         response
       );
-      
+
       // Invalidate product lists to reflect changes
       queryClient.invalidateQueries({ queryKey: productKeys.lists() });
     },
@@ -102,8 +102,8 @@ export function useUpdateProduct() {
 }
 
 export function useDeleteProduct() {
-  const client = useApiClient();
-  const productService = new ProductService(client);
+  const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+  const productService = new ProductService(baseURL);
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -111,7 +111,7 @@ export function useDeleteProduct() {
     onSuccess: (_, productId) => {
       // Remove the product from cache
       queryClient.removeQueries({ queryKey: productKeys.detail(productId) });
-      
+
       // Invalidate product lists
       queryClient.invalidateQueries({ queryKey: productKeys.lists() });
     },
@@ -124,16 +124,19 @@ export function useProductsByCategory(categoryId: string, enabled = true) {
 }
 
 export function useInfiniteProducts(params?: ProductQueryParams) {
-  const client = useApiClient();
-  const productService = new ProductService(client);
+  const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+  const productService = new ProductService(baseURL);
 
   return useInfiniteQuery({
     queryKey: productKeys.list(params),
-    queryFn: ({ pageParam = 1 }) => 
+    queryFn: ({ pageParam = 1 }) =>
       productService.getProducts({ ...params, page: pageParam }),
     getNextPageParam: (lastPage: PaginatedResponse<ProductEntity>) => {
-      const { page, totalPages } = lastPage.pagination;
-      return page < totalPages ? page + 1 : undefined;
+      if (lastPage.pagination) {
+        const { page, totalPages } = lastPage.pagination;
+        return page < totalPages ? page + 1 : undefined;
+      }
+      return lastPage.hasMore ? (lastPage.page || 1) + 1 : undefined;
     },
     initialPageParam: 1,
     staleTime: 5 * 60 * 1000,

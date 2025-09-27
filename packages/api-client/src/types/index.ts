@@ -2,7 +2,8 @@
 
 export interface ApiResponse<T> {
   data: T;
-  status: number;
+  status?: number;
+  success?: boolean;
   message?: string;
   timestamp?: string;
   requestId?: string;
@@ -10,7 +11,11 @@ export interface ApiResponse<T> {
 
 export interface PaginatedResponse<T> {
   items: T[];
-  pagination: {
+  total?: number;
+  page?: number;
+  limit?: number;
+  hasMore?: boolean;
+  pagination?: {
     page: number;
     size: number;
     total: number;
