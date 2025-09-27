@@ -1,8 +1,12 @@
 // Export all entities and services
-export { Product } from './domain/entities'
+export { Product, Products, ProductSchema } from './domain/entities'
+
+// Export ports
+export { GetProductsPort } from './port/out/GetProductsPort'
+export { GetRankedProdoctsUseCase as GetRankedProductsUseCaseInterface } from './port/in/GetRankedProductsUseCase'
 
 // Export DI container
-export { GetRankedProdoctsUseCase } from './di'
+export { setupContainer, GetRankedProdoctsUseCase } from './di'
 
 // Export application services for external use
 export { GetRankedProductsApplicationService } from './application/services/GetRankedProductsApplicationService'

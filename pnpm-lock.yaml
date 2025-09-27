@@ -32,7 +32,16 @@ importers:
       react-dom:
         specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
+      tsyringe:
+        specifier: ^4.10.0
+        version: 4.10.0
+      zod:
+        specifier: ^3.22.0
+        version: 3.25.76
     devDependencies:
+      '@ecommerce/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@ecommerce/typescript-config':
         specifier: workspace:*
         version: link:../../tools/typescript-config
