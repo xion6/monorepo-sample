@@ -1,0 +1,1 @@
+export { GetRankedProductsApplicationService } from './service/GetRankedProductsApplicationService'

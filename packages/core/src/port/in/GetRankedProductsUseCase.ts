@@ -1,5 +1,5 @@
-import { ProductsEntity } from '../../domain/entities/Product'
+import { Products } from '../../domain/entities/Product'
 
 export interface GetRankedProdoctsUseCase {
-  execute(): Promise<ProductsEntity>
+  execute(): Promise<Products>
 }
