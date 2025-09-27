@@ -18,20 +18,20 @@ export type Product = z.infer<typeof ProductSchema>;
 export type Products = z.infer<typeof ProductArraySchema>;
 
 export class ProductEntity {
-  constructor(private product: Product) {}
+  constructor(private product: Product) { }
 
   get id() { return this.product.id; }
   get name() { return this.product.name; }
   get price() { return this.product.price; }
-  
+
   isInStock(): boolean {
     return this.product.stock > 0;
   }
-  
+
   canPurchase(quantity: number): boolean {
     return this.product.stock >= quantity;
   }
-  
+
   updateStock(newStock: number): ProductEntity {
     return new ProductEntity({
       ...this.product,
@@ -42,17 +42,17 @@ export class ProductEntity {
 }
 
 export class ProductsEntity {
-  constructor(private products: Products) {}
+  constructor(private products: Products) { }
 
   get all() { return this.products; }
 
   findById(id: string): ProductEntity | undefined {
-    const product = this.products.find(p => p.id === id);
+    const product = this.products.find((p: Product) => p.id === id);
     return product ? new ProductEntity(product) : undefined;
   }
 
   filterByCategory(categoryId: string): ProductsEntity {
-    const filtered = this.products.filter(p => p.categoryId === categoryId);
+    const filtered = this.products.filter((p: Product) => p.categoryId === categoryId);
     return new ProductsEntity(filtered);
   }
 

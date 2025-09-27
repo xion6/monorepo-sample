@@ -1,6 +1,6 @@
 import { BaseService } from './base.service';
 import { API_ROUTES } from '../api-routes';
-import { ProductEntity, ProductSchema, Product } from '@ecommerce/domain';
+import { ProductEntity, ProductSchema, Product } from '@ecommerce/core';
 import { 
   CreateProductRequest, 
   UpdateProductRequest, 

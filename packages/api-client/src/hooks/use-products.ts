@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
 import { ProductService } from '../services';
 import { useApiClient } from './use-api-client';
-import { ProductEntity } from '@ecommerce/domain';
+import { ProductEntity } from '@ecommerce/core';
 import {
   ProductQueryParams,
   CreateProductRequest,

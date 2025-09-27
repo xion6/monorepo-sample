@@ -11,11 +11,11 @@ pnpm --filter @ecommerce/web dev
 pnpm build
 
 # 特定パッケージのビルド
-pnpm --filter @ecommerce/domain build
+pnpm --filter @ecommerce/core build
 
 # 依存関係の追加（特定のワークスペースに）
 pnpm --filter @ecommerce/web add lodash
 pnpm --filter @ecommerce/ui add -D @types/react
 
 # ワークスペース間の依存関係追加
-pnpm --filter @ecommerce/web add @ecommerce/domain@workspace:*
+pnpm --filter @ecommerce/web add @ecommerce/core@workspace:*

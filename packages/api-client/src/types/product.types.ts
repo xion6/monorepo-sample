@@ -1,6 +1,6 @@
 // Product-specific API types
 // Re-export ProductEntity from domain for consistency
-export { ProductEntity as Product } from '@ecommerce/domain';
+export { ProductEntity as Product } from '@ecommerce/core';
 
 export interface CreateProductRequest {
   name: string;

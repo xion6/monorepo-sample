@@ -66,9 +66,9 @@ importers:
 
   packages/api-client:
     dependencies:
-      '@ecommerce/domain':
+      '@ecommerce/core':
         specifier: workspace:*
-        version: link:../domain
+        version: link:../core
       '@tanstack/react-query':
         specifier: ^5.0.0
         version: 5.90.2(react@19.1.0)
@@ -92,15 +92,15 @@ importers:
         specifier: ^5.0.0
         version: 5.9.2
 
-  packages/domain:
+  packages/core:
     dependencies:
       zod:
         specifier: ^3.22.0
         version: 3.25.76
     devDependencies:
-      '@ecommerce/typescript-config':
-        specifier: workspace:*
-        version: link:../../tools/typescript-config
+      rimraf:
+        specifier: ^5.0.0
+        version: 5.0.10
       typescript:
         specifier: ^5.0.0
         version: 5.9.2
