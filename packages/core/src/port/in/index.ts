@@ -1,0 +1,1 @@
+export { GetRankedProdoctsUseCase } from './GetRankedProductsUseCase';

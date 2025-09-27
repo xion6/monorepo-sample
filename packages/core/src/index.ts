@@ -1,9 +1,5 @@
 // Export all entities and services
-export * from './domain/entities';
-export * from './domain/services';
-
-// Export ports (interfaces)
-
+export { Product } from './domain/entities';
 
 // Export DI container
-export * from './di';
+export { GetRankedProdoctsUseCase } from './di';

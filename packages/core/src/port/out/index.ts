@@ -1,0 +1,1 @@
+export { GetProductsPort } from './GetProductsPort';
