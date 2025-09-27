@@ -14,7 +14,6 @@ import {
   SearchProductsService,
   GetProductsByCategoryService
 } from './domain/services/GetProductsByRankService';
-import { HttpProductsAdapter, HttpClient } from './adapters/http-products.adapter';
 
 export interface DIContainer {
   getProductsByRankUseCase: GetProductsByRankUseCase;
@@ -26,7 +25,6 @@ export interface DIContainer {
 }
 
 export class DependencyContainer implements DIContainer {
-  private _productsPort: GetProductsPort;
   private _productService: ProductService;
   private _getProductsByRankService: GetProductsByRankService;
   private _getProductByIdService: GetProductByIdService;
@@ -34,17 +32,14 @@ export class DependencyContainer implements DIContainer {
   private _searchProductsService: SearchProductsService;
   private _getProductsByCategoryService: GetProductsByCategoryService;
 
-  constructor(httpClient: HttpClient, baseUrl?: string) {
-    // Secondary Adapter
-    this._productsPort = new HttpProductsAdapter(httpClient, baseUrl);
-
+  constructor(productsPort: GetProductsPort) {
     // Domain Services (Application Layer)
-    this._productService = new ProductService(this._productsPort);
-    this._getProductsByRankService = new GetProductsByRankService(this._productsPort);
-    this._getProductByIdService = new GetProductByIdService(this._productsPort);
-    this._getAllProductsService = new GetAllProductsService(this._productsPort);
-    this._searchProductsService = new SearchProductsService(this._productsPort);
-    this._getProductsByCategoryService = new GetProductsByCategoryService(this._productsPort);
+    this._productService = new ProductService(productsPort);
+    this._getProductsByRankService = new GetProductsByRankService(productsPort);
+    this._getProductByIdService = new GetProductByIdService(productsPort);
+    this._getAllProductsService = new GetAllProductsService(productsPort);
+    this._searchProductsService = new SearchProductsService(productsPort);
+    this._getProductsByCategoryService = new GetProductsByCategoryService(productsPort);
   }
 
   get getProductsByRankUseCase(): GetProductsByRankUseCase {
@@ -73,6 +68,6 @@ export class DependencyContainer implements DIContainer {
 }
 
 // Factory function for creating container
-export function createContainer(httpClient: HttpClient, baseUrl?: string): DIContainer {
-  return new DependencyContainer(httpClient, baseUrl);
+export function createContainer(productsPort: GetProductsPort): DIContainer {
+  return new DependencyContainer(productsPort);
 }

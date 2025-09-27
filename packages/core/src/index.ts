@@ -6,8 +6,5 @@ export * from './domain/services';
 export * from './port/in/GetProductsByRankUseCase';
 export * from './port/out/GetProductsPort';
 
-// Export adapters
-export * from './adapters/http-products.adapter';
-
 // Export DI container
 export * from './di';
