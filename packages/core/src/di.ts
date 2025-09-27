@@ -3,7 +3,7 @@ import type { DependencyContainer as TSyringeDependencyContainer } from 'tsyring
 
 import { container } from 'tsyringe'
 
-import { GetRankedProductsApplicationService } from './application/service/GetRankedProductsApplicationService'
+import { GetRankedProductsApplicationService } from './application/services/GetRankedProductsApplicationService'
 import { ProductDomainService } from './domain/services/ProductDomainService'
 import { GetRankedProdoctsUseCase } from './port/in/GetRankedProductsUseCase'
 import { GetProductsPort } from './port/out/GetProductsPort'

@@ -5,7 +5,7 @@ export { Product } from './domain/entities'
 export { GetRankedProdoctsUseCase } from './di'
 
 // Export application services for external use
-export { GetRankedProductsApplicationService } from './application/service/GetRankedProductsApplicationService'
+export { GetRankedProductsApplicationService } from './application/services/GetRankedProductsApplicationService'
 
 // Export domain services
 export { ProductDomainService } from './domain/services/ProductDomainService'

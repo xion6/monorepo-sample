@@ -1,1 +1,1 @@
-export { GetRankedProductsApplicationService } from './service/GetRankedProductsApplicationService'
+export { GetRankedProductsApplicationService } from './services/GetRankedProductsApplicationService'
