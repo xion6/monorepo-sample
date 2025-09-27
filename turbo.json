@@ -16,6 +16,20 @@
       "persistent": true
     },
     "lint": {},
+    "lint:fix": {
+      "cache": false,
+      "outputs": []
+    },
+    "format": {
+      "cache": false,
+      "outputs": []
+    },
+    "typecheck": {
+      "dependsOn": [
+        "build"
+      ],
+      "outputs": []
+    },
     "test": {
       "dependsOn": [
         "^build"
@@ -23,10 +37,6 @@
     },
     "clean": {
       "cache": false
-    },
-    "format": {
-      "cache": false,
-      "outputs": []
     }
   }
 }
