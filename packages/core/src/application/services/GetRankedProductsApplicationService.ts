@@ -14,10 +14,13 @@ import { GetProductsPort } from '../../port/out/GetProductsPort'
 export class GetRankedProductsApplicationService
   implements GetRankedProdoctsUseCase
 {
+  private readonly productDomainService: ProductDomainService
+
   constructor(
-    @inject('GetProductsPort') private readonly productsPort: GetProductsPort,
-    private readonly productDomainService: ProductDomainService
-  ) {}
+    @inject('GetProductsPort') private readonly productsPort: GetProductsPort
+  ) {
+    this.productDomainService = new ProductDomainService()
+  }
 
   /**
    * Executes the use case workflow
