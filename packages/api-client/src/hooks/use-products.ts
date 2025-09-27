@@ -1,8 +1,8 @@
 import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
 import { ProductService } from '../services';
 import { useApiClient } from './use-api-client';
+import { ProductEntity } from '@ecommerce/domain';
 import {
-  Product,
   ProductQueryParams,
   CreateProductRequest,
   UpdateProductRequest,
@@ -66,7 +66,7 @@ export function useCreateProduct() {
 
   return useMutation({
     mutationFn: (data: CreateProductRequest) => productService.createProduct(data),
-    onSuccess: (response: ApiResponse<Product>) => {
+    onSuccess: (response: ApiResponse<ProductEntity>) => {
       // Invalidate and refetch product lists
       queryClient.invalidateQueries({ queryKey: productKeys.lists() });
       
@@ -86,7 +86,7 @@ export function useUpdateProduct() {
 
   return useMutation({
     mutationFn: (data: UpdateProductRequest) => productService.updateProduct(data),
-    onSuccess: (response: ApiResponse<Product>, variables) => {
+    onSuccess: (response: ApiResponse<ProductEntity>, variables) => {
       const productId = variables.id;
       
       // Update the specific product in cache
@@ -119,8 +119,8 @@ export function useDeleteProduct() {
 }
 
 // Utility hooks for common patterns
-export function useProductsByCategory(category: string, enabled = true) {
-  return useProducts({ category });
+export function useProductsByCategory(categoryId: string, enabled = true) {
+  return useProducts({ categoryId });
 }
 
 export function useInfiniteProducts(params?: ProductQueryParams) {
@@ -131,7 +131,7 @@ export function useInfiniteProducts(params?: ProductQueryParams) {
     queryKey: productKeys.list(params),
     queryFn: ({ pageParam = 1 }) => 
       productService.getProducts({ ...params, page: pageParam }),
-    getNextPageParam: (lastPage: PaginatedResponse<Product>) => {
+    getNextPageParam: (lastPage: PaginatedResponse<ProductEntity>) => {
       const { page, totalPages } = lastPage.pagination;
       return page < totalPages ? page + 1 : undefined;
     },

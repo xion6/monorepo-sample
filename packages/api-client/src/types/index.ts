@@ -8,7 +8,8 @@ export interface ApiResponse<T> {
   requestId?: string;
 }
 
-export interface PaginatedResponse<T> extends ApiResponse<T[]> {
+export interface PaginatedResponse<T> {
+  items: T[];
   pagination: {
     page: number;
     size: number;

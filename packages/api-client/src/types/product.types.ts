@@ -1,29 +1,14 @@
 // Product-specific API types
-// These should ideally import from @ecommerce/domain for consistency
-
-export interface Product {
-  id: string;
-  name: string;
-  description?: string;
-  price: number;
-  currency: string;
-  category?: string;
-  tags?: string[];
-  imageUrl?: string;
-  inStock: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
+// Re-export ProductEntity from domain for consistency
+export { ProductEntity as Product } from '@ecommerce/domain';
 
 export interface CreateProductRequest {
   name: string;
-  description?: string;
+  description: string;
   price: number;
-  currency: string;
-  category?: string;
-  tags?: string[];
-  imageUrl?: string;
-  inStock?: boolean;
+  categoryId: string;
+  imageUrl: string;
+  stock?: number;
 }
 
 export interface UpdateProductRequest extends Partial<CreateProductRequest> {
@@ -31,11 +16,10 @@ export interface UpdateProductRequest extends Partial<CreateProductRequest> {
 }
 
 export interface ProductFilters {
-  category?: string;
+  categoryId?: string;
   minPrice?: number;
   maxPrice?: number;
   inStock?: boolean;
-  tags?: string[];
 }
 
 export interface ProductQueryParams extends ProductFilters {

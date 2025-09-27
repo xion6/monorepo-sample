@@ -14,7 +14,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "axios": "^1.6.0"
+    "axios": "^1.6.0",
+    "@ecommerce/domain": "workspace:*"
   },
   "devDependencies": {
     "@ecommerce/typescript-config": "workspace:*",
@@ -23,7 +24,6 @@
     "typescript": "^5.0.0"
   },
   "peerDependencies": {
-    "@ecommerce/domain": "workspace:*",
     "@tanstack/react-query": "^5.0.0",
     "react": "^18.0.0 || ^19.0.0"
   },
