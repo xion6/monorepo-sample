@@ -12,7 +12,10 @@ export const ProductSchema = z.object({
   updatedAt: z.date(),
 });
 
+export const ProductArraySchema = z.array(ProductSchema);
+
 export type Product = z.infer<typeof ProductSchema>;
+export type Products = z.infer<typeof ProductArraySchema>;
 
 export class ProductEntity {
   constructor(private product: Product) {}
@@ -35,5 +38,30 @@ export class ProductEntity {
       stock: newStock,
       updatedAt: new Date(),
     });
+  }
+}
+
+export class ProductsEntity {
+  constructor(private products: Products) {}
+
+  get all() { return this.products; }
+
+  findById(id: string): ProductEntity | undefined {
+    const product = this.products.find(p => p.id === id);
+    return product ? new ProductEntity(product) : undefined;
+  }
+
+  filterByCategory(categoryId: string): ProductsEntity {
+    const filtered = this.products.filter(p => p.categoryId === categoryId);
+    return new ProductsEntity(filtered);
+  }
+
+  sortByPrice(ascending: boolean = true): ProductsEntity {
+    const sorted = [...this.products].sort((a, b) => ascending ? a.price - b.price : b.price - a.price);
+    return new ProductsEntity(sorted);
+  }
+
+  toArray(): Products {
+    return this.products;
   }
 }
