@@ -1,21 +1,19 @@
 import "reflect-metadata";
 import { injectable, inject } from "tsyringe";
 import {
-  GetProductsByRankUseCase,
+  GetRankedProdoctsUseCase,
 
-
-
-
-} from '../../port/in/GetProductsByRankUseCase';
+  
+} from '../../port/in/GetRankedProductsUseCase';
 import { GetProductsPort } from '../../port/out/GetProductsPort';
 import { ProductsEntity, ProductEntity } from '../entities/Product';
 
 @injectable()
-export class GetProductsByRankService implements GetProductsByRankUseCase {
+export class GetRankedProdoctsService implements GetRankedProdoctsUseCase {
   constructor(@inject("GetProductsPort") private readonly productsPort: GetProductsPort) { }
 
-  async execute(rank: number): Promise<ProductsEntity> {
-    const products = await this.productsPort.findByRank(rank);
-    return new ProductsEntity(products);
+  async execute(query: unknown): Promise<ProductsEntity> {
+    const products = await this.productsPort.getProducts();
+    return new ProductsEntity(products).sortByRank();
   }
 }

@@ -61,6 +61,12 @@ export class ProductsEntity {
     return new ProductsEntity(sorted);
   }
 
+  sortByRank(): ProductsEntity {
+    // Assuming products have a 'rank' property for demonstration purposes
+    const sorted = [...this.products].sort((a, b) => (a as any).rank - (b as any).rank);
+    return new ProductsEntity(sorted);
+  }
+
   toArray(): Products {
     return this.products;
   }
