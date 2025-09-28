@@ -28,7 +28,7 @@ export default [
    */
   {
     /**
-     * チェック対象のファイルパターンのグローバル設定。TypeScript と JavaScript の両方を対象とする
+     * チェック対象のファイルパターンのグローバル設定。TypeScript を対象とする
      * @see https://eslint.org/docs/latest/use/configure/configuration-files#specifying-files-and-ignores
      */
     files: ['**/*.ts'], // 必要に応じて jsx や tsx を追加
@@ -57,7 +57,6 @@ export default [
        * import 文をアルファベット順にソート
        * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/order.md#alphabetize
        */
-      // import 文の順序を整理
       'import/order': [
         'error',
         {
@@ -101,13 +100,24 @@ export default [
         },
       ],
 
-      // any型を警告にする (エラーから変更)
+      /**
+       * any 型の使用を禁止
+       * @see https://typescript-eslint.io/rules/no-explicit-any
+       */
       '@typescript-eslint/no-explicit-any': 'error',
 
-      // 関数の戻り値の型定義を必須にする
+      /**
+       * 関数の戻り値の型を必ず明示的に指定する
+       * @see https://typescript-eslint.io/rules/explicit-function-return-type
+       */
       '@typescript-eslint/explicit-function-return-type': 'error',
 
-      // console.logは警告にする
+      /**
+       * console.log の使用を警告
+       * @see https://eslint.org/docs/latest/rules/no-console
+       *
+       * MEMO: 開発中のデバッグ用途で console.log を使うことがあるため、エラーではなく警告に設定
+       */
       'no-console': 'warn',
     },
   },
