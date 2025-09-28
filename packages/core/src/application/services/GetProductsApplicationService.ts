@@ -3,6 +3,7 @@ import { injectable, inject } from 'tsyringe'
 
 import { Product } from '../../domain/entities/Product'
 import { ProductDomainService } from '../../domain/services/ProductDomainService'
+
 import type { GetProductsUseCase } from '../../port/in/GetProductsUseCase'
 import type { GetProductsPort } from '../../port/out/GetProductsPort'
 
@@ -47,6 +48,7 @@ export class GetProductsApplicationService implements GetProductsUseCase {
       return rankedProducts
     } catch (error) {
       // 5. Application-level error handling
+      // eslint-disable-next-line no-console
       console.error('Failed to get ranked products:', error)
       throw error
     }

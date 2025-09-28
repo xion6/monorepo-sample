@@ -14,7 +14,7 @@ export default [
    * @see https://eslint.org/docs/latest/use/configure/configuration-files#globally-ignoring-files-with-ignores
    */
   {
-    ignores: ['node_modules/**', 'dist/**', 'build/**', 'coverage/**'],
+    ignores: ['dist/**', 'build/**', 'coverage/**'],
   },
 
   /**
@@ -31,7 +31,7 @@ export default [
      * チェック対象のファイルパターンのグローバル設定。TypeScript と JavaScript の両方を対象とする
      * @see https://eslint.org/docs/latest/use/configure/configuration-files#specifying-files-and-ignores
      */
-    files: ['**/*.ts', '**/*.js'], // 必要に応じて jsx や tsx を追加
+    files: ['**/*.ts'], // 必要に応じて jsx や tsx を追加
 
     /**
      * ESLint のパーサーを typescript-eslint を使用して TypeScript 用に設定
@@ -57,10 +57,21 @@ export default [
        * import 文をアルファベット順にソート
        * @see https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/order.md#alphabetize
        */
+      // import 文の順序を整理
       'import/order': [
         'error',
         {
-          alphabetize: { order: 'asc' },
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            ['parent', 'sibling'],
+            'object',
+            'type',
+            'index',
+          ],
+          'newlines-between': 'always',
+          alphabetize: { order: 'asc', caseInsensitive: true },
         },
       ],
 
@@ -78,6 +89,26 @@ export default [
        * @see https://eslint.org/docs/latest/rules/prefer-arrow-callback
        */
       'prefer-arrow-callback': 'error',
+
+      /**
+       * import 文で型のみをインポートする場合は type-imports を使用する
+       * @see https://typescript-eslint.io/rules/consistent-type-imports
+       */
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          prefer: 'type-imports',
+        },
+      ],
+
+      // any型を警告にする (エラーから変更)
+      '@typescript-eslint/no-explicit-any': 'error',
+
+      // 関数の戻り値の型定義を必須にする
+      '@typescript-eslint/explicit-function-return-type': 'error',
+
+      // console.logは警告にする
+      'no-console': 'warn',
     },
   },
 ]
