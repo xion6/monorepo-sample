@@ -22,12 +22,10 @@
   },
   "packageManager": "pnpm@8.6.0",
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
+    "**/*.{js,ts,jsx,tsx}": [
+      "pnpm lint:fix",
+      "pnpm format --write"
     ],
-    "*.{js,jsx,ts,tsx,json,css,md}": [
-      "prettier --write"
-    ]
+    "**/*.{json,md}": "pnpm format --write"
   }
 }
