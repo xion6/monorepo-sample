@@ -36,6 +36,60 @@ const eslintConfig = [
 
       // Allow dynamic imports for Next.js lazy loading
       'import/no-dynamic-require': 'off',
+
+      // Customize import order to fit Next.js conventions
+      'import/order': [
+        'error',
+        {
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
+          ],
+          'newlines-between': 'always',
+          alphabetize: { order: 'asc', caseInsensitive: true },
+          pathGroups: [
+            {
+              pattern: 'react**',
+              group: 'builtin',
+              position: 'before',
+            },
+            {
+              pattern: '@material-ui/**',
+              group: 'external',
+              position: 'after',
+            },
+          ],
+          pathGroupsExcludedImportTypes: ['react'],
+        },
+      ],
+
+      // === Import Resolution ===
+      'import/no-unresolved': [
+        'error',
+        {
+          commonjs: true,
+          caseSensitive: true,
+        },
+      ],
+      'import/named': 'error', // 名前付きimportの存在確認
+      'import/default': 'error', // デフォルトexportの存在確認
+      'import/namespace': 'error', // namespaceimportの確認
+      'import/no-absolute-path': 'error', // 絶対パスimportの禁止
+      'import/no-self-import': 'error', // 自分自身のimportの禁止
+      'import/no-cycle': [
+        // 循環importの検出
+        'error',
+        {
+          maxDepth: 10,
+          ignoreExternal: true,
+        },
+      ],
+
+      'import/no-useless-path-segments': 'error', // 無駄なパスセグメントの検出
     },
   },
 

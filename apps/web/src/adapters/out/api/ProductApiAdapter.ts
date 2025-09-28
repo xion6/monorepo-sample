@@ -1,7 +1,6 @@
-import { z } from 'zod'
-
 import type { GetProductsPort, ProductData } from '@ecommerce/core'
 import { ProductDataSchema } from '@ecommerce/core'
+import { z } from 'zod'
 
 /**
  * HTTP Client for external product API
