@@ -11,7 +11,13 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   // Next.js specific rules
-  ...compat.extends('next/core-web-vitals', 'next/typescript', 'prettier'),
+  ...compat.extends(
+    'next/core-web-vitals',
+    'next/typescript',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier'
+  ),
 
   {
     // Project-specific overrides
@@ -19,7 +25,6 @@ const eslintConfig = [
       // Next.js specific import rules
       '@next/next/no-img-element': 'error',
       '@next/next/no-page-custom-font': 'warn',
-      'no-console': 'warn',
 
       // Adjust import rules for Next.js patterns
       'import/no-anonymous-default-export': [
