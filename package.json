@@ -22,10 +22,8 @@
   },
   "packageManager": "pnpm@8.6.0",
   "lint-staged": {
-    "**/*.{js,ts,jsx,tsx}": [
-      "pnpm lint:fix",
-      "pnpm format --write"
-    ],
-    "**/*.{json,md}": "pnpm format --write"
+    "apps/web/**/*.{js,ts,jsx,tsx}": "cd apps/web && npx eslint --fix",
+    "packages/core/**/*.{js,ts,jsx,tsx}": "cd packages/core && npx eslint --fix",
+    "**/*.{json,md}": "prettier --write"
   }
 }

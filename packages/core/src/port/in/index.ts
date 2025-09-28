@@ -1,1 +1,1 @@
-export { GetRankedProdoctsUseCase } from './GetRankedProductsUseCase'
+export { GetProductsUseCase } from './GetProductsUseCase'

@@ -14,4 +14,4 @@ setupContainer(productApiAdapter)
 /**
  * Re-export use case functions for easy access
  */
-export { GetRankedProdoctsUseCase } from '@ecommerce/core'
+export { GetProductsUseCase } from '@ecommerce/core'

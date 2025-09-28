@@ -3,17 +3,15 @@ import { injectable, inject } from 'tsyringe'
 
 import { Product } from '../../domain/entities/Product'
 import { ProductDomainService } from '../../domain/services/ProductDomainService'
-import { GetRankedProdoctsUseCase } from '../../port/in/GetRankedProductsUseCase'
+import { GetProductsUseCase } from '../../port/in/GetProductsUseCase'
 import { GetProductsPort } from '../../port/out/GetProductsPort'
 
 /**
- * Application Service for GetRankedProducts use case
+ * Application Service for GetProducts use case
  * Orchestrates the workflow and coordinates between external resources and domain logic
  */
 @injectable()
-export class GetRankedProductsApplicationService
-  implements GetRankedProdoctsUseCase
-{
+export class GetProductsApplicationService implements GetProductsUseCase {
   private readonly productDomainService: ProductDomainService
 
   constructor(
@@ -29,7 +27,7 @@ export class GetRankedProductsApplicationService
    * - Delegate to domain services for business logic
    * - Handle cross-cutting concerns (logging, transactions, etc.)
    */
-  async execute(): Promise<Product[]> {
+  async getRankedProducts(): Promise<Product[]> {
     try {
       // 1. Fetch data from external resources (via ports)
       const productDataList = await this.productsPort.getProducts()

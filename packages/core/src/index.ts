@@ -3,13 +3,13 @@ export { Product, ProductDataSchema, type ProductData } from './domain/entities'
 
 // Export ports
 export { GetProductsPort } from './port/out/GetProductsPort'
-export { GetRankedProdoctsUseCase as GetRankedProductsUseCaseInterface } from './port/in/GetRankedProductsUseCase'
+export { GetProductsUseCase as GetProductsUseCaseInterface } from './port/in/GetProductsUseCase'
 
 // Export DI container
-export { setupContainer, GetRankedProdoctsUseCase } from './di'
+export { setupContainer, GetProductsUseCase } from './di'
 
 // Export application services for external use
-export { GetRankedProductsApplicationService } from './application/services/GetRankedProductsApplicationService'
+export { GetProductsApplicationService } from './application/services/GetProductsApplicationService'
 
 // Export domain services
 export { ProductDomainService } from './domain/services/ProductDomainService'

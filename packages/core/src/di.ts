@@ -3,8 +3,8 @@ import type { DependencyContainer as TSyringeDependencyContainer } from 'tsyring
 
 import { container } from 'tsyringe'
 
-import { GetRankedProductsApplicationService } from './application/services/GetRankedProductsApplicationService'
-import { GetRankedProdoctsUseCase } from './port/in/GetRankedProductsUseCase'
+import { GetProductsApplicationService } from './application/services/GetProductsApplicationService'
+import { GetProductsUseCase } from './port/in/GetProductsUseCase'
 import { GetProductsPort } from './port/out/GetProductsPort'
 
 // Register dependencies
@@ -17,14 +17,14 @@ export function setupContainer(
   })
 
   // Register application services (they will auto-resolve dependencies)
-  container.register<GetRankedProdoctsUseCase>('GetRankedProdoctsUseCase', {
-    useClass: GetRankedProductsApplicationService,
+  container.register<GetProductsUseCase>('GetProductsUseCase', {
+    useClass: GetProductsApplicationService,
   })
 
   return container
 }
 
 // Convenience functions for getting services
-export function GetRankedProdoctsUseCase(): GetRankedProdoctsUseCase {
-  return container.resolve<GetRankedProdoctsUseCase>('GetRankedProdoctsUseCase')
+export function GetProductsUseCase(): GetProductsUseCase {
+  return container.resolve<GetProductsUseCase>('GetProductsUseCase')
 }

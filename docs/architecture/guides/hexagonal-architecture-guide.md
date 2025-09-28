@@ -204,9 +204,9 @@ export class ProductDomainService {
 #### Inbound Ports - ユースケース
 
 ```typescript
-// src/port/in/GetRankedProductsUseCase.ts
-export interface GetRankedProductsUseCase {
-  execute(): Promise<Products>;
+// src/port/in/GetProductsUseCase.ts
+export interface GetProductsUseCase {
+  getRankedProducts(): Promise<Products>;
 }
 ```
 
@@ -230,11 +230,9 @@ export interface GetProductsPort {
 **責務**: ユースケースの調整とオーケストレーション
 
 ```typescript
-// src/application/services/GetRankedProductsApplicationService.ts
+// src/application/services/GetProductsApplicationService.ts
 @injectable()
-export class GetRankedProductsApplicationService
-  implements GetRankedProductsUseCase
-{
+export class GetProductsApplicationService implements GetProductsUseCase {
   constructor(
     @inject("GetProductsPort") private readonly productsPort: GetProductsPort,
   ) {
@@ -298,8 +296,8 @@ export function setupContainer(
     useValue: productsPort,
   });
 
-  container.register<GetRankedProductsUseCase>("GetRankedProductsUseCase", {
-    useClass: GetRankedProductsApplicationService,
+  container.register<GetProductsUseCase>("GetProductsUseCase", {
+    useClass: GetProductsApplicationService,
   });
 
   return container;
@@ -313,7 +311,7 @@ export function setupContainer(
 const productApiAdapter = new ProductApiAdapter();
 setupContainer(productApiAdapter);
 
-export { GetRankedProductsUseCase } from "@ecommerce/core";
+export { GetProductsUseCase } from "@ecommerce/core";
 ```
 
 ## ESLint による依存関係強制
