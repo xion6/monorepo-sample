@@ -119,9 +119,11 @@ export default [
        *
        * MEMO: 開発中のデバッグ用途で console.log を使うことがあるため、エラーではなく警告に設定
        */
-      'no-console': 'warn',
+      'no-console': ['warn', { allow: ['warn', 'error'] }], // console.warn/errorは許可
 
-      // functionキーワードによる関数定義をすべてエラーにする
+      /**
+       * コールバック関数をアロー関数で書くことを強制
+       */
       'prefer-arrow/prefer-arrow-functions': [
         'error',
         {
@@ -134,6 +136,69 @@ export default [
       // (補足) ESLintコアのルールも併用するとより良い
       'prefer-arrow-callback': 'error', // コールバック関数にアロー関数を強制
       'func-style': ['error', 'expression'], // 関数宣言(function foo() {})を禁止
+
+      /**
+       * Promise の完了を待たない場合はエラーにする
+       * @see https://typescript-eslint.io/rules/no-floating-promises
+       */
+      '@typescript-eslint/no-floating-promises': 'error',
+
+      /**
+       * 非同期関数のコールバックで Promise を返す場合はエラーにする
+       * @see https://typescript-eslint.io/rules/no-misused-promises
+       *
+       * MEMO: async/await を正しく使用しないと、Promise が解決される前に次の処理が実行される可能性があるため、このルールを有効化してミスを防止する
+       */
+      '@typescript-eslint/no-misused-promises': 'error',
+
+      /**
+       * == や != の代わりに === や !== を使用することを強制
+       * @see https://eslint.org/docs/latest/rules/eqeqeq
+       *
+       * MEMO: 型の自動変換による予期せぬ動作を防止するため、常に厳密な比較を使用することを推奨
+       */
+      eqeqeq: ['error', 'always'],
+
+      /**
+       * const 宣言を可能な限り使用することを強制
+       * @see https://eslint.org/docs/latest/rules/prefer-const
+       *
+       * MEMO: 変数の再代入がない場合は const を使用することで、コードの意図を明確にし、予期せぬ再代入によるバグを防止できるため
+       */
+      'prefer-const': 'error',
+
+      /**
+       * オブジェクトのプロパティアクセスにおいて、可能な場合はオプショナルチェイニングを使用することを推奨
+       * @see https://typescript-eslint.io/rules/prefer-optional-chain
+       *
+       * MEMO: ネストされたオブジェクトのプロパティにアクセスする際に、オプショナルチェイニングを使用することで、コードが簡潔になり、nullチェックを手動で行う必要がなくなるため
+       */
+      '@typescript-eslint/prefer-optional-chain': 'warn',
+
+      /**
+       * nullish coalescing 演算子 (??) の使用を推奨
+       * @see https://typescript-eslint.io/rules/prefer-nullish-coalescing
+       *
+       * MEMO: nullish coalescing 演算子を使用することで、null または undefined の場合にのみデフォルト値を提供でき、意図しない falsy 値 (例えば、0 や空文字列) に対して誤ってデフォルト値が適用されるのを防止できるため
+       */
+      '@typescript-eslint/prefer-nullish-coalescing': 'warn',
+
+      /**
+       * 命名規則の強制
+       * @see https://typescript-eslint.io/rules/naming-convention
+       *
+       * MEMO: 一貫した命名規則を使用することで、コードの可読性と保守性が向上するため
+       */
+      '@typescript-eslint/naming-convention': [
+        'error',
+        // { selector: 'interface', format: ['PascalCase'], prefix: ['I'] },
+        {
+          selector: 'variable',
+          types: ['boolean'],
+          format: ['PascalCase'],
+          prefix: ['is', 'should', 'has'],
+        },
+      ],
     },
   },
 ]

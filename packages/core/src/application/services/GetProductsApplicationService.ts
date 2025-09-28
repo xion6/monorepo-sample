@@ -47,7 +47,6 @@ export class GetProductsApplicationService implements GetProductsUseCase {
       return rankedProducts
     } catch (error) {
       // 5. Application-level error handling
-      // eslint-disable-next-line no-console
       console.error('Failed to get ranked products:', error)
       throw error
     }

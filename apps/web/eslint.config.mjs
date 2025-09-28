@@ -27,7 +27,7 @@ const eslintConfig = [
       '@next/next/no-page-custom-font': 'warn',
 
       // General code quality rules
-      'no-console': 'warn',
+      'no-console': ['warn', { allow: ['warn', 'error'] }], // console.warn/errorは許可
       '@typescript-eslint/no-explicit-any': 'error',
 
       // Adjust import rules for Next.js patterns
