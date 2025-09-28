@@ -1,4 +1,5 @@
 import Image from 'next/image'
+
 import { GetRankedProdoctsUseCase } from '../lib/container'
 
 export default async function Home() {

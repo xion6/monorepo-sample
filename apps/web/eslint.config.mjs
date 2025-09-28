@@ -1,66 +1,63 @@
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
 import { FlatCompat } from '@eslint/eslintrc'
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
 const compat = new FlatCompat({
-  // import.meta.dirname is available after Node.js v20.11.0
-  baseDirectory: import.meta.dirname,
+  baseDirectory: __dirname,
 })
 
 const eslintConfig = [
-  ...compat.config({
-    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
-    ignores: ['node_modules', 'dist', '.next', 'out', 'build'],
-    extends: [
-      'next/core-web-vitals',
-      'next/typescript',
-      'eslint:recommended',
-      'plugin:@next/next/recommended',
-      'turbo',
-      'prettier',
-    ],
-    plugins: ['@typescript-eslint', 'unused-imports'],
+  // Next.js specific rules
+  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+
+  {
+    // Project-specific overrides
     rules: {
-      // ここにプロジェクト固有のルールを追加できます
-      'import/order': [
+      // Next.js specific import rules
+      '@next/next/no-img-element': 'error',
+      '@next/next/no-page-custom-font': 'warn',
+
+      // Adjust import rules for Next.js patterns
+      'import/no-anonymous-default-export': [
         'error',
         {
-          groups: [
-            'builtin',
-            'external',
-            'parent',
-            'sibling',
-            'index',
-            'object',
-            'type',
-          ],
-          pathGroups: [
-            {
-              pattern: 'react',
-              group: 'builtin',
-              position: 'before',
-            },
-            {
-              pattern: '@/**',
-              group: 'parent',
-              position: 'before',
-            },
-          ],
-          pathGroupsExcludedImportTypes: ['builtin'],
-          alphabetize: {
-            order: 'asc',
-          },
-          'newlines-between': 'never',
+          allowArray: false,
+          allowArrowFunction: false,
+          allowAnonymousClass: false,
+          allowAnonymousFunction: false,
+          allowCallExpression: true,
+          allowLiteral: false,
+          allowObject: true, // Allow for Next.js config objects
         },
       ],
-      '@typescript-eslint/consistent-type-imports': 'warn',
-      'unused-imports/no-unused-imports': 'error',
+
+      // Allow dynamic imports for Next.js lazy loading
+      'import/no-dynamic-require': 'off',
     },
-    // Next.jsのルートディレクトリを指定
-    settings: {
-      next: {
-        rootDir: '.',
-      },
+  },
+
+  {
+    // File-specific rules
+    files: ['**/*.config.{js,mjs,ts}', '**/middleware.ts'],
+    rules: {
+      'import/no-anonymous-default-export': 'off',
+      'import/no-unused-modules': 'off',
     },
-  }),
+  },
+
+  {
+    ignores: [
+      'node_modules/**',
+      '.next/**',
+      'out/**',
+      'build/**',
+      'next-env.d.ts',
+      '*.config.{js,mjs,ts}',
+    ],
+  },
 ]
 
 export default eslintConfig

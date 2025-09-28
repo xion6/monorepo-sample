@@ -1,4 +1,5 @@
 import { setupContainer } from '@ecommerce/core'
+
 import { ProductApiAdapter } from '../adapters/out/api/ProductApiAdapter'
 
 /**
