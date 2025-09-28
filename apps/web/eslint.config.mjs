@@ -1,7 +1,5 @@
 import nextConfig from '@ecommerce/eslint-config/next'
 
-const eslintConfig = [
-  ...nextConfig,
-]
+const eslintConfig = [...nextConfig]
 
 export default eslintConfig

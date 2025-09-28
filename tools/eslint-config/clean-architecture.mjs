@@ -1,21 +1,21 @@
 export default [
   // Clean Architecture dependency rules
   {
-    files: ['src/domain/**/*.{ts,tsx}'],
+    files: ["src/domain/**/*.{ts,tsx}"],
     rules: {
-      'no-restricted-imports': [
-        'error',
+      "no-restricted-imports": [
+        "error",
         {
           patterns: [
             {
-              group: ['**/application/**'],
+              group: ["**/application/**"],
               message:
-                '❌ Domain layer cannot import from Application layer (Clean Architecture violation)',
+                "❌ Domain layer cannot import from Application layer (Clean Architecture violation)",
             },
             {
-              group: ['**/port/**'],
+              group: ["**/port/**"],
               message:
-                '❌ Domain layer cannot import from Port layer (Clean Architecture violation)',
+                "❌ Domain layer cannot import from Port layer (Clean Architecture violation)",
             },
           ],
         },
@@ -23,20 +23,20 @@ export default [
     },
   },
   {
-    files: ['src/port/**/*.{ts,tsx}'],
+    files: ["src/port/**/*.{ts,tsx}"],
     rules: {
-      'no-restricted-imports': [
-        'error',
+      "no-restricted-imports": [
+        "error",
         {
           patterns: [
             {
-              group: ['**/application/**'],
+              group: ["**/application/**"],
               message:
-                '❌ Port layer cannot import from Application layer (Clean Architecture violation)',
+                "❌ Port layer cannot import from Application layer (Clean Architecture violation)",
             },
           ],
         },
       ],
     },
   },
-]
+];
