@@ -7,14 +7,17 @@
   "exports": {
     "./base": "./base.mjs",
     "./node": "./node.mjs",
+    "./react": "./react.mjs",
     "./clean-architecture": "./clean-architecture.mjs",
     "./next": "./next.mjs"
   },
   "files": [
     "base.mjs",
     "node.mjs",
+    "react.mjs",
     "clean-architecture.mjs",
-    "next.mjs"
+    "next.mjs",
+    "import-plugin-rules.mjs"
   ],
   "scripts": {
     "clean": "rimraf dist"

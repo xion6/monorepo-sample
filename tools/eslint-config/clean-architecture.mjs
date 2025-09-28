@@ -2,7 +2,7 @@ export default [
   // === DOMAIN LAYER CONSTRAINTS ===
   // Domain is the innermost layer - cannot depend on any other business layers
   {
-    files: ["src/domain/**/*.{ts,tsx}"],
+    files: ["**/src/domain/**/*.{ts,tsx}"],
     rules: {
       "no-restricted-imports": [
         "error",
@@ -40,7 +40,7 @@ export default [
   // === PORT LAYER CONSTRAINTS ===
   // Ports define interfaces but cannot depend on application logic or adapters
   {
-    files: ["src/port/**/*.{ts,tsx}"],
+    files: ["**/src/port/**/*.{ts,tsx}"],
     rules: {
       "no-restricted-imports": [
         "error",
@@ -73,7 +73,7 @@ export default [
   // === APPLICATION LAYER CONSTRAINTS ===
   // Application can use domain and ports, but not adapters/infrastructure
   {
-    files: ["src/application/**/*.{ts,tsx}"],
+    files: ["**/src/application/**/*.{ts,tsx}"],
     rules: {
       "no-restricted-imports": [
         "error",
@@ -102,9 +102,9 @@ export default [
   // But they should primarily interact through ports
   {
     files: [
-      "src/infrastructure/**/*.{ts,tsx}",
-      "src/adapters/**/*.{ts,tsx}",
-      "src/adapter/**/*.{ts,tsx}",
+      "**/src/infrastructure/**/*.{ts,tsx}",
+      "**/src/adapters/**/*.{ts,tsx}",
+      "**/src/adapter/**/*.{ts,tsx}",
     ],
     rules: {
       "no-restricted-imports": [
