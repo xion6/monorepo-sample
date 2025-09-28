@@ -10,8 +10,6 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "clean": "rimraf dist",
-    "lint": "eslint src --ext .ts,.tsx",
-    "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit"
   },
@@ -21,7 +19,6 @@
     "zod": "^3.22.0"
   },
   "devDependencies": {
-    "@ecommerce/eslint-config": "workspace:*",
     "eslint": "^9",
     "jiti": "^2.6.0",
     "prettier": "3.6.2",
