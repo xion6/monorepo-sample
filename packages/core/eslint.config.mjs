@@ -2,6 +2,7 @@ import tseslint from '@typescript-eslint/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
 import eslintConfigPrettier from 'eslint-config-prettier'
 import importPlugin from 'eslint-plugin-import'
+import preferArrowPlugin from 'eslint-plugin-prefer-arrow'
 
 /**
  * ESLint 設定ファイル
@@ -55,6 +56,7 @@ export default [
     plugins: {
       import: importPlugin, // import/export 構文の検証
       '@typescript-eslint': tseslint, // TypeScript 専用ルール
+      'prefer-arrow': preferArrowPlugin, // コールバックをアロー関数で書くことを強制
     },
 
     /**
@@ -118,6 +120,20 @@ export default [
        * MEMO: 開発中のデバッグ用途で console.log を使うことがあるため、エラーではなく警告に設定
        */
       'no-console': 'warn',
+
+      // functionキーワードによる関数定義をすべてエラーにする
+      'prefer-arrow/prefer-arrow-functions': [
+        'error',
+        {
+          // オプション: falseにすると、名前のない関数式(function() {})は許可される
+          disallowPrototype: true,
+          singleReturnOnly: false,
+          classPropertiesAllowed: false,
+        },
+      ],
+      // (補足) ESLintコアのルールも併用するとより良い
+      'prefer-arrow-callback': 'error', // コールバック関数にアロー関数を強制
+      'func-style': ['error', 'expression'], // 関数宣言(function foo() {})を禁止
     },
   },
 ]

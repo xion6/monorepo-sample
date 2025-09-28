@@ -8,9 +8,9 @@ import type { GetProductsUseCase as IGetProductsUseCase } from './port/in/GetPro
 import type { GetProductsPort } from './port/out/GetProductsPort'
 
 // Register dependencies
-export function setupContainer(
+export const setupContainer = (
   productsPort: GetProductsPort
-): TSyringeDependencyContainer {
+): TSyringeDependencyContainer => {
   // Register the port implementation
   container.register<GetProductsPort>('GetProductsPort', {
     useValue: productsPort,
@@ -25,6 +25,6 @@ export function setupContainer(
 }
 
 // Convenience functions for getting services
-export function GetProductsUseCase(): IGetProductsUseCase {
+export const GetProductsUseCase = (): IGetProductsUseCase => {
   return container.resolve<IGetProductsUseCase>('GetProductsUseCase')
 }
