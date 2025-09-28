@@ -2,7 +2,11 @@ node_modules
 .turbo
 .claude
 .serena
-.vscode
+
+# VSCode personal settings (exclude individual configs, keep team settings)
+.vscode/launch.json
+.vscode/tasks.json
+.vscode/*.code-workspace
 
 # Build outputs
 *.js

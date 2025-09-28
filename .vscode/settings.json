@@ -1,0 +1,72 @@
+{
+  // === Prettier設定 ===
+  // 全体のデフォルトフォーマッターをPrettierに設定
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // 言語別のフォーマッター設定
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // === エディター自動化設定 ===
+  // ファイル保存時に自動フォーマットを実行
+  "editor.formatOnSave": true,
+
+  // ファイル保存時にESLintの自動修正を実行
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // === ESLint基本設定 ===
+  // ESLint拡張機能を有効化
+  "eslint.enable": true,
+
+  // ESLintが検証する言語/ファイルタイプを指定
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+
+  // === Monorepo対応設定 ===
+  // ESLintのワーキングディレクトリを自動検出（各package配下のeslint.config.mjsを認識）
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+
+  // === Flat Config対応設定 ===
+  // ESLint 9.x系のFlat Config形式を使用（eslint.config.mjsファイル対応）
+  "eslint.useFlatConfig": true,
+
+  // ESLint設定ファイルを明示的に指定（Flat Config使用時の推奨設定）
+  "eslint.options": {
+    "overrideConfigFile": "eslint.config.mjs"
+  },
+
+  // === デバッグ・トラブルシューティング設定 ===
+  // ESLintのデバッグ情報を出力パネルに表示（問題発生時の調査用）
+  "eslint.debug": true,
+
+  // ESLint Language Serverの詳細ログを出力（VSCodeとESLintの通信状況を確認）
+  "eslint.trace.server": "verbose",
+
+  // === TypeScript設定 ===
+  // package.jsonからの自動import提案を無効化（Clean Architectureの依存関係制約を強化）
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+
+  // === エディター表示設定 ===
+  // タブの代わりにスペースを使用
+  "editor.insertSpaces": true,
+
+  // インデント幅を2スペースに設定
+  "editor.tabSize": 2
+}
