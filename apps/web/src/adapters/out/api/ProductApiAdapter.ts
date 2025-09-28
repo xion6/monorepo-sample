@@ -35,6 +35,7 @@ export class ProductApiAdapter implements GetProductsPort {
       const ProductArraySchema = z.array(ProductDataSchema)
       return ProductArraySchema.parse(data)
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Failed to fetch products from API:', error)
 
       // Return mock data for development
