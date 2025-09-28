@@ -1,4 +1,4 @@
-import { Product, Products } from '../entities/Product'
+import { type ProductData } from '../entities/Product'
 
 /**
  * Domain Service for product-related business logic
@@ -9,21 +9,21 @@ export class ProductDomainService {
    * Ranks products based on business rules
    * Pure domain logic without external dependencies
    */
-  sortByRank(products: Products): Products {
+  sortByRank(products: ProductData[]): ProductData {
     return [...products].sort((a, b) => a.rank - b.rank)
   }
 
   /**
    * Filters products by category
    */
-  filterByCategory(products: Products, categoryId: string): Products {
+  filterByCategory(products: ProductData, categoryId: string): ProductData {
     return products.filter((p) => p.categoryId === categoryId)
   }
 
   /**
    * Sorts products by price
    */
-  sortByPrice(products: Products, ascending: boolean = true): Products {
+  sortByPrice(products: ProductData, ascending: boolean = true): ProductData {
     return [...products].sort((a, b) =>
       ascending ? a.price - b.price : b.price - a.price
     )
@@ -32,14 +32,14 @@ export class ProductDomainService {
   /**
    * Finds product by ID
    */
-  findById(products: Products, id: string): Product | undefined {
+  findById(products: ProductData, id: string): ProductData | undefined {
     return products.find((p) => p.id === id)
   }
 
   /**
    * Calculates product relevance score based on business criteria
    */
-  calculateProductScore(product: Product): number {
+  calculateProductScore(product: ProductData): number {
     // Base score from product rank
     let score = product.rank
 
