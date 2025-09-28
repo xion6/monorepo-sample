@@ -12,6 +12,9 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   // === エディター自動化設定 ===
   // ファイル保存時に自動フォーマットを実行
   "editor.formatOnSave": true,
