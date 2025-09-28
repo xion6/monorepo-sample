@@ -68,3 +68,6 @@ src/lib/vendor/
 .env
 .env.*
 !.env.example
+
+.serena
+.turbo
