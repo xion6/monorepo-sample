@@ -32,10 +32,10 @@ export class GetRankedProductsApplicationService
   async execute(): Promise<Product[]> {
     try {
       // 1. Fetch data from external resources (via ports)
-      const productData = await this.productsPort.getProducts()
+      const productDataList = await this.productsPort.getProducts()
 
       // 2. Convert ProductData to Product entities
-      const products = productData.map((data) => Product.reconstitute(data))
+      const products = productDataList.map((data) => Product.reconstitute(data))
 
       // 3. Delegate business logic to domain service
       const rankedProducts = this.productDomainService.sortByRank(products)
