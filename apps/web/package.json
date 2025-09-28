@@ -12,16 +12,14 @@
     "clean": "rimraf .next dist"
   },
   "dependencies": {
-    "@ecommerce/eslint-config": "workspace:^",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
     "next": "15.5.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "tsyringe": "^4.10.0",
-    "zod": "^3.22.0"
+    "zod": "^3.22.0",
+    "@ecommerce/core": "workspace:*"
   },
   "devDependencies": {
-    "@ecommerce/core": "workspace:*",
     "@ecommerce/typescript-config": "workspace:*",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
