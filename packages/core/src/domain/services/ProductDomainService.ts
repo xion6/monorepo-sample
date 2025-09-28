@@ -1,4 +1,4 @@
-import { type ProductData } from '../entities/Product'
+import { Product } from '../entities/Product'
 
 /**
  * Domain Service for product-related business logic
@@ -9,21 +9,21 @@ export class ProductDomainService {
    * Ranks products based on business rules
    * Pure domain logic without external dependencies
    */
-  sortByRank(products: ProductData[]): ProductData {
+  sortByRank(products: Product[]): Product[] {
     return [...products].sort((a, b) => a.rank - b.rank)
   }
 
   /**
    * Filters products by category
    */
-  filterByCategory(products: ProductData, categoryId: string): ProductData {
+  filterByCategory(products: Product[], categoryId: string): Product[] {
     return products.filter((p) => p.categoryId === categoryId)
   }
 
   /**
    * Sorts products by price
    */
-  sortByPrice(products: ProductData, ascending: boolean = true): ProductData {
+  sortByPrice(products: Product[], ascending: boolean = true): Product[] {
     return [...products].sort((a, b) =>
       ascending ? a.price - b.price : b.price - a.price
     )
@@ -32,14 +32,14 @@ export class ProductDomainService {
   /**
    * Finds product by ID
    */
-  findById(products: ProductData, id: string): ProductData | undefined {
+  findById(products: Product[], id: string): Product | undefined {
     return products.find((p) => p.id === id)
   }
 
   /**
    * Calculates product relevance score based on business criteria
    */
-  calculateProductScore(product: ProductData): number {
+  calculateProductScore(product: Product): number {
     // Base score from product rank
     let score = product.rank
 
@@ -60,7 +60,7 @@ export class ProductDomainService {
    * Determines if products can be grouped together
    * Business rule for product compatibility
    */
-  canProductsBeGrouped(products: Products): boolean {
+  canProductsBeGrouped(products: Product[]): boolean {
     if (products.length === 0) return false
 
     // Business rule: All products must be in stock

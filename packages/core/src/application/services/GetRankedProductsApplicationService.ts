@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import { injectable, inject } from 'tsyringe'
 
-import { Products } from '../../domain/entities/Product'
+import { Product } from '../../domain/entities/Product'
 import { ProductDomainService } from '../../domain/services/ProductDomainService'
 import { GetRankedProdoctsUseCase } from '../../port/in/GetRankedProductsUseCase'
 import { GetProductsPort } from '../../port/out/GetProductsPort'
@@ -29,15 +29,18 @@ export class GetRankedProductsApplicationService
    * - Delegate to domain services for business logic
    * - Handle cross-cutting concerns (logging, transactions, etc.)
    */
-  async execute(): Promise<Products> {
+  async execute(): Promise<Product[]> {
     try {
       // 1. Fetch data from external resources (via ports)
-      const products = await this.productsPort.getProducts()
+      const productData = await this.productsPort.getProducts()
 
-      // 2. Delegate business logic to domain service
+      // 2. Convert ProductData to Product entities
+      const products = productData.map((data) => Product.reconstitute(data))
+
+      // 3. Delegate business logic to domain service
       const rankedProducts = this.productDomainService.sortByRank(products)
 
-      // 3. Additional application-level processing could go here:
+      // 4. Additional application-level processing could go here:
       // - Audit logging
       // - Performance monitoring
       // - Security checks
@@ -45,7 +48,7 @@ export class GetRankedProductsApplicationService
 
       return rankedProducts
     } catch (error) {
-      // 4. Application-level error handling
+      // 5. Application-level error handling
       console.error('Failed to get ranked products:', error)
       throw error
     }

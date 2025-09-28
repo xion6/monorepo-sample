@@ -6,11 +6,13 @@
   "type": "module",
   "exports": {
     "./base": "./base.mjs",
+    "./node": "./node.mjs",
     "./clean-architecture": "./clean-architecture.mjs",
     "./next": "./next.mjs"
   },
   "files": [
     "base.mjs",
+    "node.mjs",
     "clean-architecture.mjs",
     "next.mjs"
   ],

@@ -1,4 +1,4 @@
-import baseConfig from '@ecommerce/eslint-config/base'
+import nodeConfig from '@ecommerce/eslint-config/node'
 import cleanArchitectureConfig from '@ecommerce/eslint-config/clean-architecture'
 
-export default [...baseConfig, ...cleanArchitectureConfig]
+export default [...nodeConfig, ...cleanArchitectureConfig]
