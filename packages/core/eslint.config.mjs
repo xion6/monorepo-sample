@@ -39,6 +39,14 @@ export default [
      */
     languageOptions: {
       parser: tsParser,
+      parserOptions: {
+        ecmaVersion: 2020,
+        sourceType: 'module',
+        project: './tsconfig.json',
+        tsconfigRootDir: import.meta.dirname,
+        experimentalDecorators: true,
+        emitDecoratorMetadata: true,
+      },
     },
 
     /**
