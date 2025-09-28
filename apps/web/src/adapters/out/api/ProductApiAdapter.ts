@@ -1,4 +1,8 @@
-import { GetProductsPort, Products, ProductSchema } from '@ecommerce/core'
+import {
+  GetProductsPort,
+  ProductData,
+  ProductDataSchema,
+} from '@ecommerce/core'
 import { z } from 'zod'
 
 /**
@@ -15,7 +19,7 @@ export class ProductApiAdapter implements GetProductsPort {
    * Fetches products from external API
    * Implements the GetProductsPort contract
    */
-  async getProducts(): Promise<Products> {
+  async getProducts(): Promise<ProductData[]> {
     try {
       const response = await fetch(`${this.baseUrl}/api/products`, {
         method: 'GET',
@@ -31,7 +35,7 @@ export class ProductApiAdapter implements GetProductsPort {
       const data = await response.json()
 
       // Validate response with Zod schema
-      const ProductArraySchema = z.array(ProductSchema)
+      const ProductArraySchema = z.array(ProductDataSchema)
       return ProductArraySchema.parse(data)
     } catch (error) {
       console.error('Failed to fetch products from API:', error)
@@ -45,7 +49,7 @@ export class ProductApiAdapter implements GetProductsPort {
    * Mock data for development/testing
    * Remove in production
    */
-  private getMockProducts(): Products {
+  private getMockProducts(): ProductData[] {
     return [
       {
         id: '1',

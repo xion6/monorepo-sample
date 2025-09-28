@@ -44,15 +44,12 @@ export class ProductDomainService {
     let score = product.rank
 
     // Business rule: In-stock products get priority
-    if (product.stock > 0) {
+    if (product.isInStock()) {
       score += 10
     }
 
     // Business rule: Recently updated products get boost
-    const daysSinceUpdate = Math.floor(
-      (Date.now() - product.updatedAt.getTime()) / (1000 * 60 * 60 * 24)
-    )
-    if (daysSinceUpdate < 7) {
+    if (product.isRecentlyUpdated()) {
       score += 5
     }
 
@@ -67,6 +64,6 @@ export class ProductDomainService {
     if (products.length === 0) return false
 
     // Business rule: All products must be in stock
-    return products.every((product) => product.stock > 0)
+    return products.every((product) => product.isInStock())
   }
 }

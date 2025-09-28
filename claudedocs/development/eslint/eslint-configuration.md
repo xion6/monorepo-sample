@@ -20,6 +20,59 @@ packages/core/eslint.config.mjs   # ビジネスロジック固有設定
 
 ### @ecommerce/eslint-config パッケージ設計
 
+#### Import Error Detection - Import エラー検出
+ESLintでimportエラーを自動検出する設定を有効化：
+
+```javascript
+// tools/eslint-config/base.mjs
+{
+  rules: {
+    // === Import Resolution ===
+    "import/no-unresolved": ["error", {
+      "commonjs": true,
+      "caseSensitive": true,
+      "ignore": ["^@?\\w"],  // 外部ライブラリの例外
+    }],
+    "import/named": "error",           // 名前付きimportの存在確認
+    "import/default": "error",         // デフォルトexportの存在確認
+    "import/namespace": "error",       // namespaceimportの確認
+    "import/no-absolute-path": "error", // 絶対パスimportの禁止
+    "import/no-self-import": "error",   // 自分自身のimportの禁止
+    "import/no-cycle": ["error", {      // 循環importの検出
+      "maxDepth": 10,
+      "ignoreExternal": true,
+    }],
+    "import/no-useless-path-segments": "error", // 無駄なパスセグメント検出
+  },
+  settings: {
+    "import/resolver": {
+      typescript: {
+        project: ["./tsconfig.json", "./packages/*/tsconfig.json"],
+        alwaysTryTypes: true,
+      },
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+        moduleDirectory: ["node_modules", "src/"],
+      },
+    },
+  },
+}
+```
+
+**検出されるエラー例:**
+- `Unable to resolve path to module './non-existent-file'` - 存在しないファイル
+- `ProductEntity not found in './Product'` - 存在しないnamed export
+- `import/no-cycle` - 循環import依存関係
+
+**依存関係:**
+```json
+{
+  "dependencies": {
+    "eslint-import-resolver-typescript": "^3.6.1"
+  }
+}
+```
+
 #### package.json エクスポート戦略
 ```json
 {

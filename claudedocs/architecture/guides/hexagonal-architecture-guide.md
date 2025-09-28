@@ -49,24 +49,75 @@ apps/web/src/
 #### Entities - エンティティ
 ```typescript
 // src/domain/entities/Product.ts
-export const ProductSchema = z.object({
+
+// === Domain Value Object Schema ===
+export const ProductDataSchema = z.object({
   id: z.string(),
   name: z.string().min(1),
+  rank: z.number().int().min(1),
   price: z.number().positive(),
+  stock: z.number().int().min(0),
+  createdAt: z.date(),
+  updatedAt: z.date(),
   // ...
 })
 
-export type Product = z.infer<typeof ProductSchema>
+// === Domain Types ===
+export type ProductData = z.infer<typeof ProductDataSchema>
+export type Products = Product[]
 
-export class ProductEntity {
-  constructor(private product: Product) {}
+// === Domain Entity ===
+export class Product {
+  private constructor(private readonly data: ProductData) {}
 
+  // === Factory Methods ===
+  static create(data: ProductData): Product {
+    const validatedData = ProductDataSchema.parse(data)
+    return new Product(validatedData)
+  }
+
+  static reconstitute(data: ProductData): Product {
+    return new Product(data)
+  }
+
+  // === Properties ===
+  get id(): string { return this.data.id }
+  get name(): string { return this.data.name }
+  get price(): number { return this.data.price }
+  get rank(): number { return this.data.rank }
+
+  // === Business Rules ===
   isInStock(): boolean {
-    return this.product.stock > 0
+    return this.data.stock > 0
   }
 
   canPurchase(quantity: number): boolean {
-    return this.product.stock >= quantity
+    if (quantity <= 0) return false
+    return this.data.stock >= quantity
+  }
+
+  isNewlyAdded(): boolean {
+    const daysSinceCreation = Math.floor(
+      (Date.now() - this.data.createdAt.getTime()) / (1000 * 60 * 60 * 24)
+    )
+    return daysSinceCreation <= 7
+  }
+
+  // === State Transitions ===
+  updateStock(newStock: number): Product {
+    if (newStock < 0) throw new Error('Stock cannot be negative')
+
+    const updatedData: ProductData = {
+      ...this.data,
+      stock: newStock,
+      updatedAt: new Date(),
+    }
+    return new Product(updatedData)
+  }
+
+  // === Data Access ===
+  toData(): ProductData {
+    return { ...this.data }
   }
 }
 ```
@@ -75,22 +126,61 @@ export class ProductEntity {
 ```typescript
 // src/domain/services/ProductDomainService.ts
 export class ProductDomainService {
+  /**
+   * ビジネスルールに基づく商品ランキング
+   */
   sortByRank(products: Products): Products {
     return [...products].sort((a, b) => a.rank - b.rank)
   }
 
+  /**
+   * 商品の関連性スコア計算
+   * エンティティのビジネスルールメソッドを活用
+   */
   calculateProductScore(product: Product): number {
     let score = product.rank
-    if (product.stock > 0) score += 10
+
+    // ビジネスルール: 在庫ありの商品を優先
+    if (product.isInStock()) {
+      score += 10
+    }
+
+    // ビジネスルール: 最近更新された商品にブースト
+    if (product.isRecentlyUpdated()) {
+      score += 5
+    }
+
     return score
+  }
+
+  /**
+   * カテゴリによる商品フィルタリング
+   */
+  filterByCategory(products: Products, categoryId: string): Products {
+    return products.filter((p) => p.categoryId === categoryId)
+  }
+
+  /**
+   * 商品グループ化の可否判定
+   */
+  canProductsBeGrouped(products: Products): boolean {
+    if (products.length === 0) return false
+    return products.every((product) => product.isInStock())
   }
 }
 ```
+
+**DDDパターンの適用**:
+- **Entity Pattern**: 一意のアイデンティティとライフサイクル管理
+- **Factory Pattern**: オブジェクト生成の制御と複雑な初期化の隠蔽
+- **Value Object Pattern**: 不変のデータ構造（ProductData）
+- **Domain Service Pattern**: 複数エンティティに跨るビジネスルール
 
 **制約**:
 - ❌ 他の層への依存禁止
 - ✅ 純粋な関数・クラスのみ
 - ✅ ビジネスルールの実装
+- ✅ 不変性の保持（イミュータブル設計）
 
 ### 🚪 Port Layer - ポート層
 
@@ -237,17 +327,56 @@ export default [
 
 #### 1. ドメイン層から開始
 ```typescript
-// 1. エンティティ定義
-export interface OrderEntity {
-  id: string
-  customerId: string
-  totalAmount: number
+// 1. データスキーマ定義
+export const OrderDataSchema = z.object({
+  id: z.string(),
+  customerId: z.string(),
+  totalAmount: z.number().positive(),
+  status: z.enum(['pending', 'confirmed', 'shipped', 'delivered']),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+})
+
+export type OrderData = z.infer<typeof OrderDataSchema>
+
+// 2. エンティティ定義
+export class Order {
+  private constructor(private readonly data: OrderData) {}
+
+  static create(data: OrderData): Order {
+    const validatedData = OrderDataSchema.parse(data)
+    return new Order(validatedData)
+  }
+
+  // ビジネスルール
+  calculateTotalWithTax(): number {
+    return this.data.totalAmount * 1.1
+  }
+
+  canBeCancelled(): boolean {
+    return this.data.status === 'pending'
+  }
+
+  // 状態遷移
+  confirm(): Order {
+    if (this.data.status !== 'pending') {
+      throw new Error('Order must be pending to confirm')
+    }
+
+    return new Order({
+      ...this.data,
+      status: 'confirmed',
+      updatedAt: new Date(),
+    })
+  }
 }
 
-// 2. ドメインサービス
+// 3. ドメインサービス
 export class OrderDomainService {
-  calculateTotalWithTax(order: Order): number {
-    return order.totalAmount * 1.1 // ビジネスルール
+  calculateBulkDiscount(orders: Order[]): number {
+    // 複数注文に跨るビジネスルール
+    if (orders.length >= 5) return 0.1
+    return 0
   }
 }
 ```
