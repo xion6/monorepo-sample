@@ -1,26 +1,30 @@
 {
-  "name": "@ecommerce/eslint-config",
+  "name": "@ecommerce/eslint-config-old",
   "version": "1.0.0",
   "description": "Shared ESLint configuration for ecommerce monorepo",
   "main": "base.mjs",
   "type": "module",
   "exports": {
-    ".": "./base.mjs",
     "./base": "./base.mjs",
-    "./next": "./next.mjs",
-    "./node": "./node.mjs"
+    "./node": "./node.mjs",
+    "./react": "./react.mjs",
+    "./clean-architecture": "./clean-architecture.mjs",
+    "./next": "./next.mjs"
   },
   "files": [
     "base.mjs",
+    "node.mjs",
+    "react.mjs",
+    "clean-architecture.mjs",
     "next.mjs",
-    "node.mjs"
+    "import-plugin-rules.mjs"
   ],
   "scripts": {
     "clean": "rimraf dist"
   },
   "dependencies": {
+    "@eslint/eslintrc": "^3",
     "@eslint/js": "^9.36.0",
-    "eslint-config-next": "^14.2.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",
@@ -29,7 +33,7 @@
     "typescript-eslint": "^8.44.1"
   },
   "devDependencies": {
-    "eslint": "^9.0.0",
+    "eslint": "^9",
     "rimraf": "^5.0.0",
     "typescript": "^5.0.0"
   },

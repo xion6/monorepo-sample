@@ -1,16 +1,21 @@
-import { FlatCompat } from "@eslint/eslintrc";
-import reactConfig from "./react.mjs";
+import baseConfig from "./base.mjs";
+import nextConfig from "eslint-config-next";
 
-const compat = new FlatCompat({
-  baseDirectory: import.meta.dirname,
-});
+// base.mjsの末尾にはprettierのコンフィグが配置されている
+// nextのコンフィグはprettierの前に追加する必要がある
+const base = baseConfig.slice(0, -1);
+const prettier = baseConfig.at(-1);
 
-// react.mjsをベースに、Next.jsのルールをFlatCompatを使って追加
+/**
+ * Next.jsプロジェクト向けのESLint設定
+ *
+ * @type {import('eslint').Linter.FlatConfig[]}
+ * @see https://nextjs.org/docs/app/building-your-application/configuring/eslint
+ */
 export default [
-  ...reactConfig,
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-  {
-    // Next.jsプロジェクト固有のignoreファイルなどをここに追加
-    ignores: ["next-env.d.ts"],
-  },
+  ...base,
+  // Next.jsの推奨ルールを適用
+  // @see https://github.com/vercel/next.js/blob/canary/packages/eslint-config-next/index.js
+  nextConfig,
+  prettier,
 ];
