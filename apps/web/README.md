@@ -1,36 +1,201 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# @ecommerce/web
 
-## Getting Started
+Next.js 15をベースとしたモダンなE-commerceフロントエンドアプリケーション。React 19とTailwindCSS 4を採用し、Turbopackによる高速開発環境を提供します。
 
-First, run the development server:
+## 🎯 概要
+
+この`@ecommerce/web`パッケージは、E-commerceプラットフォームのメインフロントエンドアプリケーションです。最新のNext.js機能とReact Server Componentsを活用し、高性能なユーザー体験を実現します。
+
+## 🛠️ 技術スタック
+
+### コア技術
+
+- **Next.js 15.5.3**: React Server Components、App Router、Turbopack
+- **React 19.1.0**: 最新のHooksとSuspense機能
+- **TypeScript 5**: 型安全な開発体験
+
+### スタイリング・UI
+
+- **TailwindCSS 4**: Zero-runtime CSS-in-JS
+- **@ecommerce/ui**: 社内React コンポーネントライブラリ
+
+### 開発・品質管理
+
+- **ESLint 9**: @ecommerce/eslint-config による統一されたコード品質
+- **Prettier**: 一貫したコードフォーマット
+- **Turbopack**: 高速バンドラーによる開発効率向上
+
+### アーキテクチャ
+
+- **TSyringe**: 依存性注入によるテスタブルな設計
+- **Zod**: 実行時型検証とAPIバリデーション
+- **@ecommerce/core**: ビジネスロジック層との連携
+
+## 🚀 開発コマンド
+
+### 基本操作
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# 開発サーバー起動（Turbopack使用）
 pnpm dev
-# or
-bun dev
+
+# 本番ビルド（Turbopack使用）
+pnpm build
+
+# 本番サーバー起動
+pnpm start
+
+# 型チェック（tsc --noEmit）
+pnpm typecheck
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 品質管理
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# ESLint実行
+pnpm lint
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# ESLint自動修正
+pnpm lint:fix
 
-## Learn More
+# Prettier実行
+pnpm format
 
-To learn more about Next.js, take a look at the following resources:
+# ビルド成果物削除
+pnpm clean
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### ルートレベルからの操作
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Web アプリのみ開発サーバー起動
+pnpm --filter @ecommerce/web dev
 
-## Deploy on Vercel
+# Web アプリのみビルド
+pnpm --filter @ecommerce/web build
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Web アプリのみLint
+pnpm --filter @ecommerce/web lint
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📁 ディレクトリ構造
+
+```
+apps/web/
+├── src/
+│   ├── app/              # Next.js App Router
+│   │   ├── layout.tsx    # ルートレイアウト
+│   │   ├── page.tsx      # ホームページ
+│   │   └── globals.css   # グローバルスタイル
+│   ├── components/       # アプリケーション固有コンポーネント
+│   ├── lib/             # ユーティリティ・設定
+│   └── types/           # 型定義
+├── public/              # 静的アセット
+├── next.config.js       # Next.js設定
+├── tailwind.config.js   # TailwindCSS設定
+└── tsconfig.json        # TypeScript設定
+```
+
+## 🔧 設定詳細
+
+### Next.js設定
+
+- **Turbopack**: 開発・本番両方で使用
+- **TypeScript**: 厳密な型チェック
+- **ESLint**: next/core-web-vitals + 社内設定
+
+### TailwindCSS設定
+
+- **v4設定**: Zero-runtime CSS-in-JS
+- **カスタムテーマ**: ブランドカラー・フォント設定
+- **レスポンシブ**: モバイルファースト設計
+
+### TypeScript設定
+
+- **Project References**: @ecommerce/typescript-config/nextjs.json継承
+- **厳密モード**: strict、noImplicitAny、noImplicitReturns有効
+- **Path Mapping**: `@/`でsrcディレクトリへのエイリアス
+
+## 🏗️ アーキテクチャパターン
+
+### コンポーネント設計
+
+```typescript
+// Server Components（デフォルト）
+export default async function ProductPage({ params }: { params: { id: string } }) {
+  const product = await getProduct(params.id);
+  return <ProductDetail product={product} />;
+}
+
+// Client Components（'use client'必要）
+'use client';
+export function ProductCart() {
+  const [items, setItems] = useState([]);
+  // インタラクティブロジック
+}
+```
+
+### 依存性注入パターン
+
+```typescript
+import { container } from 'tsyringe'
+import { ProductService } from '@ecommerce/core'
+
+// サービス注入
+const productService = container.resolve(ProductService)
+```
+
+### 型安全なAPI呼び出し
+
+```typescript
+import { z } from 'zod'
+
+const ProductSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  price: z.number(),
+})
+
+type Product = z.infer<typeof ProductSchema>
+```
+
+## 🎨 UIコンポーネント活用
+
+### 社内UIライブラリの使用
+
+```typescript
+import { Button, Card, Input } from '@ecommerce/ui';
+
+export function ProductForm() {
+  return (
+    <Card>
+      <Input placeholder="商品名" />
+      <Button variant="primary">追加</Button>
+    </Card>
+  );
+}
+```
+
+## 🔗 関連パッケージ
+
+- **[@ecommerce/core](../packages/core/README.md)**: ビジネスロジック・ドメイン層
+- **[@ecommerce/ui](../packages/ui/README.md)**: Reactコンポーネントライブラリ
+- **[@ecommerce/typescript-config](../tools/typescript-config/README.md)**: 共有TypeScript設定
+
+## 📋 パフォーマンス最適化
+
+### ビルド最適化
+
+- **Turbopack**: 従来webpack比10倍高速なバンドリング
+- **Tree Shaking**: 未使用コード自動削除
+- **Code Splitting**: 自動的なチャンク分割
+
+### ランタイム最適化
+
+- **Server Components**: サーバーサイドレンダリング
+- **Image Optimization**: Next.js Imageコンポーネント
+- **Font Optimization**: システムフォント優先読み込み
+
+---
+
+**Note**: このアプリケーションはモノレポの一部であり、`@ecommerce/core`パッケージと密に連携します。開発時は必ずルートディレクトリから`pnpm dev`でアプリケーション全体を起動してください。

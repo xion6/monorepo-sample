@@ -101,7 +101,11 @@ export default [
   // Adapters can import from any layer (they're the outermost layer)
   // But they should primarily interact through ports
   {
-    files: ["src/infrastructure/**/*.{ts,tsx}", "src/adapters/**/*.{ts,tsx}", "src/adapter/**/*.{ts,tsx}"],
+    files: [
+      "src/infrastructure/**/*.{ts,tsx}",
+      "src/adapters/**/*.{ts,tsx}",
+      "src/adapter/**/*.{ts,tsx}",
+    ],
     rules: {
       "no-restricted-imports": [
         "warn", // Warning instead of error for flexibility

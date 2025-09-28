@@ -9,11 +9,7 @@ export default [
   ...tseslint.configs.recommended,
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
-    ignores: [
-      "**/dist/**",
-      "**/node_modules/**",
-      "**/build/**",
-    ],
+    ignores: ["**/dist/**", "**/node_modules/**", "**/build/**"],
     plugins: {
       import: pluginImport,
     },
@@ -48,24 +44,25 @@ export default [
         "error",
         {
           // TypeScript設定に基づく解決を有効化
-          "commonjs": true,
-          "caseSensitive": true,
-          "ignore": [
+          commonjs: true,
+          caseSensitive: true,
+          ignore: [
             // 外部ライブラリで解決できない場合の例外
             "^@?\\w",
           ],
         },
       ],
-      "import/named": "error",           // 名前付きimportの存在確認
-      "import/default": "error",         // デフォルトexportの存在確認
-      "import/namespace": "error",       // namespaceimportの確認
+      "import/named": "error", // 名前付きimportの存在確認
+      "import/default": "error", // デフォルトexportの存在確認
+      "import/namespace": "error", // namespaceimportの確認
       "import/no-absolute-path": "error", // 絶対パスimportの禁止
-      "import/no-self-import": "error",   // 自分自身のimportの禁止
-      "import/no-cycle": [                // 循環importの検出
+      "import/no-self-import": "error", // 自分自身のimportの禁止
+      "import/no-cycle": [
+        // 循環importの検出
         "error",
         {
-          "maxDepth": 10,
-          "ignoreExternal": true,
+          maxDepth: 10,
+          ignoreExternal: true,
         },
       ],
       "import/no-useless-path-segments": "error", // 無駄なパスセグメントの検出
