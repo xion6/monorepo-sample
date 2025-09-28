@@ -99,9 +99,9 @@ pnpm --filter @ecommerce/web add @ecommerce/core@workspace:*
 
 ## 🔗 関連ドキュメント
 
-- **[開発ガイド](./claudedocs/development/README.md)**: 開発環境設定・ツール詳細
-- **[アーキテクチャドキュメント](./claudedocs/architecture/README.md)**: システム設計・技術決定記録
-- **[プロセスガイド](./claudedocs/processes/README.md)**: 開発プロセス・ワークフロー
+- **[開発ガイド](./docs/development/README.md)**: 開発環境設定・ツール詳細
+- **[アーキテクチャドキュメント](./docs/architecture/README.md)**: システム設計・技術決定記録
+- **[プロセスガイド](./docs/processes/README.md)**: 開発プロセス・ワークフロー
 
 ## 💡 技術選定理由
 

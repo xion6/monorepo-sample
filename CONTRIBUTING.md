@@ -439,8 +439,8 @@ describe('ProductCard', () => {
 ### ドキュメント
 
 - [プロジェクトREADME](./README.md)
-- [アーキテクチャドキュメント](./claudedocs/architecture/README.md)
-- [開発ガイド](./claudedocs/development/README.md)
+- [アーキテクチャドキュメント](./docs/architecture/README.md)
+- [開発ガイド](./docs/development/README.md)
 
 ### 外部リソース
 
