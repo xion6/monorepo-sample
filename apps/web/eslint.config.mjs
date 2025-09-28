@@ -19,6 +19,7 @@ const eslintConfig = [
       // Next.js specific import rules
       '@next/next/no-img-element': 'error',
       '@next/next/no-page-custom-font': 'warn',
+      'no-console': 'warn',
 
       // Adjust import rules for Next.js patterns
       'import/no-anonymous-default-export': [
