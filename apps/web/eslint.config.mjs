@@ -26,6 +26,10 @@ const eslintConfig = [
       '@next/next/no-img-element': 'error',
       '@next/next/no-page-custom-font': 'warn',
 
+      // General code quality rules
+      'no-console': 'warn',
+      '@typescript-eslint/no-explicit-any': 'error',
+
       // Adjust import rules for Next.js patterns
       'import/no-anonymous-default-export': [
         'error',
