@@ -50,7 +50,7 @@ export class ProductApiAdapter implements GetProductsPort {
       {
         id: '1',
         name: 'Sample Product 1',
-        rank: 1,
+        rank: 2,
         description: 'A sample product for testing',
         price: 29.99,
         categoryId: 'electronics',
@@ -62,7 +62,7 @@ export class ProductApiAdapter implements GetProductsPort {
       {
         id: '2',
         name: 'Sample Product 2',
-        rank: 2,
+        rank: 1,
         description: 'Another sample product',
         price: 49.99,
         categoryId: 'books',

@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@ecommerce/core": "workspace:*",
+    "@ecommerce/eslint-config": "workspace:*",
     "@ecommerce/typescript-config": "workspace:*",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
