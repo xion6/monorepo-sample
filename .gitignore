@@ -16,6 +16,7 @@ node_modules
 dist/
 build/
 tsconfig.tsbuildinfo
+.tsbuildinfo
 
 # System files
 Thumbs.db

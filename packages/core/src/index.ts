@@ -2,7 +2,7 @@
 export { Product, ProductDataSchema, type ProductData } from './domain/entities'
 
 // Export ports
-export { GetProductsPort } from './port/out/GetProductsPort'
+export type { GetProductsPort } from './port/out/GetProductsPort'
 
 // Export DI container
 export { setupContainer, GetProductsUseCase } from './di'

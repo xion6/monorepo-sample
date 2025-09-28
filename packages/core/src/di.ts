@@ -4,8 +4,8 @@ import type { DependencyContainer as TSyringeDependencyContainer } from 'tsyring
 import { container } from 'tsyringe'
 
 import { GetProductsApplicationService } from './application/services/GetProductsApplicationService'
-import { GetProductsUseCase } from './port/in/GetProductsUseCase'
-import { GetProductsPort } from './port/out/GetProductsPort'
+import type { GetProductsUseCase } from './port/in/GetProductsUseCase'
+import type { GetProductsPort } from './port/out/GetProductsPort'
 
 // Register dependencies
 export function setupContainer(
