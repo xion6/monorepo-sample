@@ -1,4 +1,4 @@
-import { Product } from '../entities/Product'
+import { type Product } from '../entities/Product'
 
 /**
  * Domain Service for product-related business logic
@@ -61,7 +61,9 @@ export class ProductDomainService {
    * Business rule for product compatibility
    */
   canProductsBeGrouped(products: Product[]): boolean {
-    if (products.length === 0) return false
+    if (products.length === 0) {
+      return false
+    }
 
     // Business rule: All products must be in stock
     return products.every((product) => product.isInStock())

@@ -83,7 +83,9 @@ export class Product {
   }
 
   canPurchase(quantity: number): boolean {
-    if (quantity <= 0) return false
+    if (quantity <= 0) {
+      return false
+    }
     return this.data.stock >= quantity
   }
 
