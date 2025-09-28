@@ -3,7 +3,6 @@ import { injectable, inject } from 'tsyringe'
 
 import { Product } from '../../domain/entities/Product'
 import { ProductDomainService } from '../../domain/services/ProductDomainService'
-
 import type { GetProductsUseCase } from '../../port/in/GetProductsUseCase'
 import type { GetProductsPort } from '../../port/out/GetProductsPort'
 
