@@ -34,6 +34,6 @@
     "jiti": "^2.6.0",
     "prettier": "3.6.2",
     "rimraf": "^5.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.9.2"
   }
 }
