@@ -1,4 +1,4 @@
-import baseConfig from "./index.mjs";
+import baseConfig from "./base.mjs";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tsparser from "@typescript-eslint/parser";
 import importPlugin from "eslint-plugin-import";
