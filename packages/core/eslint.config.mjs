@@ -32,6 +32,13 @@ export default [
       ],
       'prefer-arrow-callback': 'error',
       'func-style': ['error', 'expression'],
+      // NodeNext moduleResolution対応: index.jsを含むパスを許可
+      'import/no-useless-path-segments': [
+        'error',
+        {
+          noUselessIndex: false,
+        },
+      ],
     },
   },
 
