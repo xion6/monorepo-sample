@@ -2,13 +2,12 @@
   "extends": "./base.json",
   "compilerOptions": {
     "target": "ES2020",
-    "module": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ES2020"],
-    "jsx": "react-jsx",
+    "module": "ESNext",
     "moduleResolution": "bundler",
-    "resolveJsonModules": true,
+    "jsx": "react-jsx",
+    "resolveJsonModule": true,
     "noEmit": false,
-    "outDir": "./dist",
-    "rootDir": "./src"
+    "types": ["react", "react-dom"]
   }
 }

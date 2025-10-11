@@ -3,9 +3,9 @@ import 'reflect-metadata'
 import { container } from 'tsyringe'
 import type { DependencyContainer as TSyringeDependencyContainer } from 'tsyringe'
 
-import { GetProductsApplicationService } from './application/services/GetProductsApplicationService'
-import type { GetProductsUseCase as IGetProductsUseCase } from './port/in/GetProductsUseCase'
-import type { GetProductsPort } from './port/out/GetProductsPort'
+import { GetProductsApplicationService } from './application/services/GetProductsApplicationService.js'
+import type { GetProductsUseCase as IGetProductsUseCase } from './port/in/GetProductsUseCase.js'
+import type { GetProductsPort } from './port/out/GetProductsPort.js'
 
 // Register dependencies
 export const setupContainer = (

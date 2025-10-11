@@ -1,1 +1,1 @@
-export { GetProductsApplicationService } from './services/GetProductsApplicationService'
+export { GetProductsApplicationService } from './services/GetProductsApplicationService.js'

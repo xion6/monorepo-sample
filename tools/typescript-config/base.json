@@ -18,7 +18,6 @@
     "exactOptionalPropertyTypes": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModules": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "composite": true,

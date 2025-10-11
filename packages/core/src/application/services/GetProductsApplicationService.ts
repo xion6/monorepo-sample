@@ -1,10 +1,10 @@
 import 'reflect-metadata'
 import { injectable, inject } from 'tsyringe'
 
-import { Product } from '../../domain/entities/Product'
-import { ProductDomainService } from '../../domain/services/ProductDomainService'
-import type { GetProductsUseCase } from '../../port/in/GetProductsUseCase'
-import type { GetProductsPort } from '../../port/out/GetProductsPort'
+import { Product } from '../../domain/entities/Product.js'
+import { ProductDomainService } from '../../domain/services/ProductDomainService.js'
+import type { GetProductsUseCase } from '../../port/in/GetProductsUseCase.js'
+import type { GetProductsPort } from '../../port/out/GetProductsPort.js'
 
 /**
  * Application Service for GetProducts use case

@@ -1,8 +1,8 @@
 {
   "extends": "./base.json",
   "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "noEmit": false
+    "noEmit": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   }
 }

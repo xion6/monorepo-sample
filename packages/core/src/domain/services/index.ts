@@ -1,1 +1,1 @@
-export { ProductDomainService } from './ProductDomainService'
+export { ProductDomainService } from './ProductDomainService.js'

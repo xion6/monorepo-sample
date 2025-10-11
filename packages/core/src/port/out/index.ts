@@ -1,1 +1,1 @@
-export type { GetProductsPort } from './GetProductsPort'
+export type { GetProductsPort } from './GetProductsPort.js'
