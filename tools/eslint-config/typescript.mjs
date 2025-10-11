@@ -4,8 +4,17 @@ import tsparser from "@typescript-eslint/parser";
 import importPlugin from "eslint-plugin-import";
 
 /**
- * TypeScript-specific ESLint configuration
- * Extends base config with TypeScript and import rules
+ * TypeScript ESLint configuration for E-commerce Platform Monorepo
+ *
+ * base.mjs を継承し、TypeScript固有のルールを追加
+ *
+ * 主な機能:
+ * - 型安全性の強化（any禁止、Promise処理の安全性）
+ * - import/export管理（順序、循環参照検出、型import分離）
+ * - 命名規則の統一（boolean変数、interface、type）
+ * - 関数戻り値型の明示
+ *
+ * @see https://typescript-eslint.io/
  */
 export default [
   ...baseConfig,
@@ -55,6 +64,43 @@ export default [
         },
       ],
       "@typescript-eslint/no-import-type-side-effects": "error",
+
+      // === Promise・非同期処理の型安全性 ===
+      "@typescript-eslint/no-floating-promises": "error",  // 未処理のPromiseを禁止
+      "@typescript-eslint/no-misused-promises": "error",   // Promiseの誤用を防止
+      "@typescript-eslint/await-thenable": "error",        // awaitは必ずPromiseに対してのみ使用
+
+      // === 関数の戻り値型の明示 ===
+      "@typescript-eslint/explicit-function-return-type": [
+        "error",
+        {
+          allowExpressions: true,              // 式として使用される関数は型推論を許可
+          allowTypedFunctionExpressions: true, // 型注釈のある関数式は省略可
+          allowHigherOrderFunctions: true,     // 高階関数は型推論を許可
+        },
+      ],
+
+      // === 命名規則 ===
+      "@typescript-eslint/naming-convention": [
+        "error",
+        // boolean変数はis/has/shouldで始まる
+        {
+          selector: "variable",
+          types: ["boolean"],
+          format: ["PascalCase"],
+          prefix: ["is", "has", "should", "can", "will", "did"],
+        },
+        // インターフェース名はPascalCase（接頭辞Iは不要）
+        {
+          selector: "interface",
+          format: ["PascalCase"],
+        },
+        // 型エイリアス名はPascalCase
+        {
+          selector: "typeAlias",
+          format: ["PascalCase"],
+        },
+      ],
 
       // Import rules
       "import/order": [

@@ -1,1 +1,1 @@
-export { ProductApiAdapter } from './ProductApiAdapter'
+export { ProductApiAdapter } from './ProductApiAdapter';

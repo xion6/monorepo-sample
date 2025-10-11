@@ -1,6 +1,10 @@
-import type { GetProductsPort, ProductData } from '@ecommerce/core'
-import { ProductDataSchema } from '@ecommerce/core'
 import { z } from 'zod'
+
+import {
+  ProductDataSchema,
+  type GetProductsPort,
+  type ProductData,
+} from '@ecommerce/core'
 
 /**
  * HTTP Client for external product API
@@ -8,7 +12,7 @@ import { z } from 'zod'
  */
 export class ProductApiAdapter implements GetProductsPort {
   constructor(
-    private readonly baseUrl: string = process.env.NEXT_PUBLIC_API_URL ??
+    private readonly baseUrl: string = process.env['NEXT_PUBLIC_API_URL'] ??
       'http://localhost:3001'
   ) {}
 

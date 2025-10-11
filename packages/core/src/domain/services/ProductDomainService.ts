@@ -1,4 +1,4 @@
-import { type Product } from '../entities/Product.js'
+import type { Product } from '../entities/Product.js'
 
 /**
  * Domain Service for product-related business logic

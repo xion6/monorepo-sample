@@ -1,5 +1,5 @@
 // Export all entities and services
-export { Product, ProductDataSchema, type ProductData } from './domain/entities/index.js'
+export { Product, ProductDataSchema, type ProductData } from './domain/entities'
 
 // Export ports
 export type { GetProductsPort } from './port/out/GetProductsPort.js'

@@ -2,23 +2,44 @@
   "name": "@ecommerce/eslint-config",
   "version": "1.0.0",
   "description": "Shared ESLint configuration for E-commerce Platform Monorepo",
-  "main": "index.mjs",
+  "main": "base.mjs",
   "type": "module",
+  "exports": {
+    "./base": "./base.mjs",
+    "./typescript": "./typescript.mjs",
+    "./react": "./react.mjs",
+    "./nextjs": "./nextjs.mjs"
+  },
   "files": [
-    "index.mjs",
+    "base.mjs",
+    "typescript.mjs",
     "react.mjs",
-    "typescript.mjs"
+    "nextjs.mjs"
   ],
   "scripts": {
     "test": "echo \"No tests defined\""
   },
   "peerDependencies": {
-    "eslint": "^9.0.0",
+    "@eslint/eslintrc": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^15.0.0",
+    "eslint-import-resolver-typescript": "^3.6.0",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-react": "^7.34.0",
-    "eslint-plugin-react-hooks": "^4.6.0"
+    "eslint-plugin-react-hooks": "^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "eslint-config-next": {
+      "optional": true
+    },
+    "eslint-plugin-react": {
+      "optional": true
+    },
+    "eslint-plugin-react-hooks": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@eslint/js": "^9.0.0"
@@ -28,8 +49,12 @@
     "config",
     "typescript",
     "react",
+    "nextjs",
     "monorepo"
   ],
   "author": "E-commerce Platform Team",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint-config-prettier": "^10.1.8"
+  }
 }

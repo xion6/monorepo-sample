@@ -6,14 +6,17 @@ TypeScriptベースのモダンなE-commerceプラットフォーム。Turborepo
 
 ```
 monorepo-sample/
-├── apps/                    # アプリケーション
-│   └── web/                # Next.js 15 + React 19 フロントエンド
-├── packages/               # 共有パッケージ
-│   ├── core/              # ビジネスロジック・ドメイン層
-│   └── ui/                # React コンポーネントライブラリ
-└── tools/                  # 開発ツール設定
-    ├── eslint-config/     # 共有ESLint設定
-    └── typescript-config/ # 共有TypeScript設定
+├── apps/
+│   ├── web/          # Next.js (React 19 + TypeScript) ✅ ESLint設定済み
+│   └── docs/         # Storybook（設定なし）
+├── packages/
+│   ├── core/         # ビジネスロジックライブラリ ✅ ESLint設定済み
+│   ├── ui/           # Reactコンポーネントライブラリ（設定なし）
+│   ├── utils/        # ユーティリティ関数（設定なし）
+│   └── design-tokens/ # デザイントークン（設定なし）
+└── tools/
+    ├── eslint-config/    # 共有ESLint設定 ✅ 存在
+    └── typescript-config/ # 共有TS設定 ✅ 存在
 ```
 
 ## 🚀 クイックスタート

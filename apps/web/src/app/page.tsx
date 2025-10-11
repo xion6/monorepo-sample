@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import { GetProductsUseCase } from '../lib/container'
 
-export default async function Home() {
+export default async function Home(): Promise<React.JSX.Element> {
   const rankedProducts = await GetProductsUseCase().getRankedProducts()
 
   return (

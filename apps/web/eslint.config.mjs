@@ -1,127 +1,23 @@
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
-import { FlatCompat } from '@eslint/eslintrc'
+import prettierConfig from 'eslint-config-prettier'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+import nextjsConfig from '@ecommerce/eslint-config/nextjs'
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-})
+/**
+ * ESLint configuration for @ecommerce/web (Next.js App)
+ *
+ * 共有設定 @ecommerce/eslint-config/nextjs を使用
+ * プロジェクト固有のオーバーライドが必要な場合はここに追加
+ */
+export default [
+  ...nextjsConfig,
 
-const eslintConfig = [
-  // Next.js specific rules
-  ...compat.extends(
-    'next/core-web-vitals',
-    'next/typescript',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
-    'prettier'
-  ),
-
+  // プロジェクト固有のカスタマイズ（必要な場合のみ）
   {
-    // Project-specific overrides
     rules: {
-      // Next.js specific import rules
-      '@next/next/no-img-element': 'error',
-      '@next/next/no-page-custom-font': 'warn',
-
-      // General code quality rules
-      'no-console': ['warn', { allow: ['warn', 'error'] }], // console.warn/errorは許可
-      '@typescript-eslint/no-explicit-any': 'error',
-
-      // Adjust import rules for Next.js patterns
-      'import/no-anonymous-default-export': [
-        'error',
-        {
-          allowArray: false,
-          allowArrowFunction: false,
-          allowAnonymousClass: false,
-          allowAnonymousFunction: false,
-          allowCallExpression: true,
-          allowLiteral: false,
-          allowObject: true, // Allow for Next.js config objects
-        },
-      ],
-
-      // Allow dynamic imports for Next.js lazy loading
-      'import/no-dynamic-require': 'off',
-
-      // Customize import order to fit Next.js conventions
-      'import/order': [
-        'error',
-        {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            'parent',
-            'sibling',
-            'index',
-          ],
-          'newlines-between': 'always',
-          alphabetize: { order: 'asc', caseInsensitive: true },
-          pathGroups: [
-            {
-              pattern: 'react**',
-              group: 'builtin',
-              position: 'before',
-            },
-            {
-              pattern: '@material-ui/**',
-              group: 'external',
-              position: 'after',
-            },
-          ],
-          pathGroupsExcludedImportTypes: ['react'],
-        },
-      ],
-
-      // === Import Resolution ===
-      'import/no-unresolved': [
-        'error',
-        {
-          commonjs: true,
-          caseSensitive: true,
-        },
-      ],
-      'import/named': 'error', // 名前付きimportの存在確認
-      'import/default': 'error', // デフォルトexportの存在確認
-      'import/namespace': 'error', // namespaceimportの確認
-      'import/no-absolute-path': 'error', // 絶対パスimportの禁止
-      'import/no-self-import': 'error', // 自分自身のimportの禁止
-      'import/no-cycle': [
-        // 循環importの検出
-        'error',
-        {
-          maxDepth: 10,
-          ignoreExternal: true,
-        },
-      ],
-
-      'import/no-useless-path-segments': 'error', // 無駄なパスセグメントの検出
+      // 例: 特定のルールを緩和・強化したい場合
+      // '@typescript-eslint/explicit-function-return-type': 'off',
     },
   },
 
-  {
-    // File-specific rules
-    files: ['**/*.config.{js,mjs,ts}', '**/middleware.ts'],
-    rules: {
-      'import/no-anonymous-default-export': 'off',
-      'import/no-unused-modules': 'off',
-    },
-  },
-
-  {
-    ignores: [
-      'node_modules/**',
-      '.next/**',
-      'out/**',
-      'build/**',
-      'next-env.d.ts',
-      '*.config.{js,mjs,ts}',
-    ],
-  },
+  prettierConfig,
 ]
-
-export default eslintConfig

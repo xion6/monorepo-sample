@@ -4,27 +4,52 @@ E-commerce Platform Monorepo用の共有ESLint設定パッケージ。
 
 ## 概要
 
-このパッケージは、モノレポ全体で一貫したコード品質基準を提供するESLint設定集です。JavaScript、TypeScript、Reactプロジェクト向けの設定を含みます。
+このパッケージは、モノレポ全体で一貫したコード品質基準を提供するESLint設定集です。
+ESLint v9 Flat Config 準拠で、階層型の設定アーキテクチャにより柔軟な適用が可能です。
 
 ## 提供される設定
 
-### 基本設定 (`index.js`)
+### 基本設定 (`base.mjs`)
+
+**対象**: 全プロジェクト共通
+**継承**: なし
 
 - JavaScript基本ルール
-- コードスタイル統一
-- ベストプラクティス
+- 変数管理（const/let優先、var禁止）
+- コンソール出力管理
+- Promise・非同期処理の基本ルール
 
-### TypeScript設定 (`typescript.js`)
+### TypeScript設定 (`typescript.mjs`)
 
-- TypeScript固有ルール
-- Import/Export最適化
-- 型安全性強化
+**対象**: TypeScriptプロジェクト
+**継承**: `base.mjs`
 
-### React設定 (`react.js`)
+- 型安全性の強化（any禁止、Promise処理の安全性）
+- import/export管理（順序、循環参照検出、型import分離）
+- 命名規則の統一（boolean変数、interface、type）
+- 関数戻り値型の明示
 
-- React/JSXルール
-- Hooks検証
-- コンポーネントベストプラクティス
+### React設定 (`react.mjs`)
+
+**対象**: Reactプロジェクト
+**継承**: `typescript.mjs`
+
+- React 19 対応
+- JSXスタイルの統一
+- Hooks exhaustive-deps の厳格チェック
+- パフォーマンス最適化（bind禁止、無駄なフラグメント検出）
+- アクセシビリティ基礎
+
+### Next.js設定 (`nextjs.mjs`)
+
+**対象**: Next.jsアプリケーション
+**継承**: `react.mjs`
+
+- Next.js 15 対応（App Router / Pages Router 両対応）
+- next/core-web-vitals ルールの統合
+- 動的import最適化
+- 画像最適化の強制
+- Next.js特有のimportパターン許可
 
 ## 使用方法
 
@@ -32,19 +57,35 @@ E-commerce Platform Monorepo用の共有ESLint設定パッケージ。
 
 ```bash
 # ワークスペースに追加
-pnpm --filter your-package add @ecommerce/eslint-config@workspace:*
+pnpm --filter your-package add -D @ecommerce/eslint-config@workspace:*
 
-# 必要な peer dependencies のインストール
-pnpm --filter your-package add -D eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-plugin-import eslint-plugin-react eslint-plugin-react-hooks
+# 必要な peer dependencies のインストール（プロジェクトタイプに応じて）
+# TypeScriptプロジェクトの場合
+pnpm --filter your-package add -D \
+  eslint@^9.0.0 \
+  @typescript-eslint/eslint-plugin@^8.0.0 \
+  @typescript-eslint/parser@^8.0.0 \
+  eslint-import-resolver-typescript@^3.6.0 \
+  eslint-plugin-import@^2.29.0
+
+# Reactプロジェクトの場合（上記に加えて）
+pnpm --filter your-package add -D \
+  eslint-plugin-react@^7.34.0 \
+  eslint-plugin-react-hooks@^5.0.0
+
+# Next.jsプロジェクトの場合（上記に加えて）
+pnpm --filter your-package add -D \
+  @eslint/eslintrc@^3.0.0 \
+  eslint-config-next@^15.0.0
 ```
 
 ### 設定例
 
-#### JavaScript プロジェクト
+#### JavaScript/基本プロジェクト
 
 ```javascript
 // eslint.config.mjs
-import baseConfig from "@ecommerce/eslint-config";
+import baseConfig from "@ecommerce/eslint-config/base";
 
 export default [
   ...baseConfig,
@@ -54,28 +95,48 @@ export default [
 ];
 ```
 
-#### TypeScript プロジェクト
+#### TypeScript ライブラリ
 
 ```javascript
 // eslint.config.mjs
-import typescriptConfig from "@ecommerce/eslint-config/typescript.js";
+import typescriptConfig from "@ecommerce/eslint-config/typescript";
 
 export default [
   ...typescriptConfig,
   {
     // プロジェクト固有の設定
+    rules: {
+      // 例: 特定のルールを調整
+    },
   },
 ];
 ```
 
-#### React プロジェクト
+#### React コンポーネントライブラリ
 
 ```javascript
 // eslint.config.mjs
-import reactConfig from "@ecommerce/eslint-config/react.js";
+import reactConfig from "@ecommerce/eslint-config/react";
 
 export default [
   ...reactConfig,
+  {
+    // プロジェクト固有の設定
+  },
+  {
+    ignores: ["dist/**", "build/**"],
+  },
+];
+```
+
+#### Next.js アプリケーション
+
+```javascript
+// eslint.config.mjs
+import nextjsConfig from "@ecommerce/eslint-config/nextjs";
+
+export default [
+  ...nextjsConfig,
   {
     // プロジェクト固有の設定
   },

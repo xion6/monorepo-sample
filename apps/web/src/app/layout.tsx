@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 
 import type { Metadata } from 'next'
+
 import { Geist, Geist_Mono } from 'next/font/google'
 
 import './globals.css'
@@ -24,7 +25,9 @@ interface RootLayoutProps {
   children: ReactNode
 }
 
-export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
+export default function RootLayout({
+  children,
+}: Readonly<RootLayoutProps>): React.JSX.Element {
   return (
     <html lang="en">
       <body

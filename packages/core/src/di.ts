@@ -1,7 +1,9 @@
 import 'reflect-metadata'
 
-import { container } from 'tsyringe'
-import type { DependencyContainer as TSyringeDependencyContainer } from 'tsyringe'
+import {
+  container,
+  type DependencyContainer as TSyringeDependencyContainer,
+} from 'tsyringe'
 
 import { GetProductsApplicationService } from './application/services/GetProductsApplicationService.js'
 import type { GetProductsUseCase as IGetProductsUseCase } from './port/in/GetProductsUseCase.js'
