@@ -6,8 +6,10 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "jsx": "preserve",
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
     "noEmit": true,
-    "incremental": true,
     "plugins": [{ "name": "next" }],
     "baseUrl": ".",
     "paths": { "@/*": ["./src/*"] }

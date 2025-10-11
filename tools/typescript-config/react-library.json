@@ -9,8 +9,6 @@
     "resolveJsonModules": true,
     "noEmit": false,
     "outDir": "./dist",
-    "rootDir": "./src",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "rootDir": "./src"
   }
 }
