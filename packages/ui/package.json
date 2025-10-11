@@ -11,7 +11,10 @@
     "dev": "tsc --watch",
     "clean": "rimraf dist",
     "lint": "eslint --cache --max-warnings=0",
-    "lint:fix": "eslint --fix"
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "react": "^19.0.0",
