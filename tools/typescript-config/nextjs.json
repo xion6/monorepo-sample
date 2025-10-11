@@ -3,17 +3,15 @@
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "bundler",
     "jsx": "preserve",
     "composite": false,
+    "resolveJsonModule": true,
     "declaration": false,
     "declarationMap": false,
     "noEmit": true,
-    "plugins": [{ "name": "next" }],
-    "baseUrl": ".",
-    "paths": { "@/*": ["./src/*"] }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+    "allowJs": true,
+    "plugins": [{ "name": "next" }]
+  }
 }
